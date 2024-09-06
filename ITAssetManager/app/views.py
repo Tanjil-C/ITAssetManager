@@ -34,7 +34,6 @@ def protected_view(request):
     return JsonResponse({'message': 'You have access to this protected view.'})
 
 @api_view(['POST'])
-@permission_classes([AllowAny])  # Ensure this endpoint is accessible without authentication
 def jwt_login(request):
     username = request.data.get('username')
     password = request.data.get('password')
