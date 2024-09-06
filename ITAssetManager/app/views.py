@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import render, redirect
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -34,7 +34,7 @@ def protected_view(request):
     return JsonResponse({'message': 'You have access to this protected view.'})
 
 @api_view(['POST'])
-@csrf_protect
+@permission_classes([AllowAny])  # Ensure this endpoint is accessible without authentication
 def jwt_login(request):
     username = request.data.get('username')
     password = request.data.get('password')
