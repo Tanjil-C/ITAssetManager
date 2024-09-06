@@ -33,7 +33,7 @@
   <ItemGroup>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
-    <Compile Include="app\decorator.py">
+    <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\serializers.py">

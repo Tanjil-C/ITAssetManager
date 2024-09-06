@@ -4,7 +4,7 @@ document.getElementById('login-btn').addEventListener('click', function (event) 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('/api/token/', {
+    fetch('/api/jwt-login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
