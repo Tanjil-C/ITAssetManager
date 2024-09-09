@@ -28,6 +28,22 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+@permission_classes([IsAuthenticated])
+def item_management(request):
+    return render(request, 'app/item_management.html', {'title': 'Item Management'})    
+
+
+@permission_classes([IsAuthenticated])
+def system_health_check(request):
+    return render(request, 'app/system_health_check.html', {'title': 'System Health Check'})    
+
+
+@permission_classes([IsAuthenticated])
+def equipment_ordering(request):
+    return render(request, 'app/equipment_ordering.html', {'title': 'Equipment Ordering'})    
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def protected_view(request):
@@ -45,3 +61,5 @@ def jwt_login(request):
             'access': str(refresh.access_token),
         })
     return JsonResponse({'error': 'Invalid credentials'}, status=400)
+
+

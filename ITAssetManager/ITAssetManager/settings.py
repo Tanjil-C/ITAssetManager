@@ -98,8 +98,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+
+# Directory where Django will look for additional static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app', 'static'),
+]
+
+# Directory where static files will be collected for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # REST Framework JWT configuration
 REST_FRAMEWORK = {

@@ -20,7 +20,13 @@ path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 # Custom JWT login endpoint
 path('api/jwt-login/', views.jwt_login, name='jwt_login'),
 
+
 # Admin interface
 path('admin/', admin.site.urls),
+
+# Main pages
+path('item-management', views.item_management, name='item_management'),
+path('system-health-check', views.system_health_check, name='system_health_check'),
+path('equipment-ordering', views.equipment_ordering, name='equipment_ordering'),
 ]
    
