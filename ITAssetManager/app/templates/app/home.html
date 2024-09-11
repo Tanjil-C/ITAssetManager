@@ -10,13 +10,6 @@
         </div>
 
         <div class="dashboard-grid">
-            <a href="{% url 'item_management' %}">
-                <div class="box">
-                    <span class="box-icon">🛠️</span>
-                    <h3>Item Management</h3>
-                    <p>Manage IT items and assets.</p>
-                </div>
-            </a>
             <a href="{% url 'system_health_check' %}">
                 <div class="box">
                     <span class="box-icon">💻</span>
@@ -24,11 +17,24 @@
                     <p>Monitor system performance.</p>
                 </div>
             </a>
-            <a href="{% url 'equipment_ordering' %}">
+            <a href="{% url 'equipment_list' %}">
                 <div class="box">
                     <span class="box-icon">📦</span>
-                    <h3>Equipment Ordering</h3>
-                    <p>Order new equipment and supplies.</p>
+                    <h3>Equipment</h3>
+                    <p>Manage equipment<p>
+                </div>
+            </a>
+            <a href="{% url 'employee_list' %}">
+                <div class="box">
+                    <span class="box-icon">👨‍💼</span>
+                    <h3>Employees</h3>
+                    <p>Manage employees</p>
+                </div>
+            </a>
+            <a href="{% url 'assign_equipment_list' %}">
+                <div class="box">
+                    <span class="box-icon">🔧</span>
+                    <h3>manage assigning equipments</h3>
                 </div>
             </a>
         </div>

@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Maintenance & Repair Items{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Maintenance & Repair Items</h1>
+    <a href="{% url 'system_health_check' %}" class="btn btn-secondary mb-3">Back to Health Check</a>
+    <h2>Maintenance</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in maintenance_items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.usage_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Repair</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in repair_items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.usage_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

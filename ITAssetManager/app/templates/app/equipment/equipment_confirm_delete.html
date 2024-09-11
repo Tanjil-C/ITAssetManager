@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<div class="confirm-delete">
+    <h1>Are you sure you want to delete "{{ equipment.name }}"?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes, delete</button>
+    </form>
+    <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Cancel</a>
+</div>
+{% endblock %}

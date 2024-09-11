@@ -1,0 +1,19 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Equipment Detail{% endblock %}
+
+{% block content %}
+<div class="equipment-detail">
+    <h1>{{ equipment.name }}</h1>
+    <p>{{ equipment.description }}</p>
+    <p>Acquire Date: {{ equipment.acquire_date }}</p>
+    <p>Serial Number: {{ equipment.serial_number }}</p>
+    <p>Condition Status: {{ equipment.get_condition_status_display }}</p>
+    <p>Usage Status: {{ equipment.get_usage_status_display }}</p>
+    <p>Assigned Users: {% for user in equipment.assigned_users.all %}{{ user.username }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <a class="btn btn-secondary" href="{% url 'equipment_update' equipment.pk %}">Edit</a>
+    <a class="btn btn-danger" href="{% url 'equipment_delete' equipment.pk %}">Delete</a>
+    <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Back to List</a>
+</div>
+{% endblock %}

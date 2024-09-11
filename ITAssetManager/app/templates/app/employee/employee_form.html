@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Employee Form{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ form.instance.pk|yesno:"Edit Employee,Add New Employee" }}</h1>
+    <form method="post" id="employee-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="{% url 'employee_list' %}">Cancel</a>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('employee-form');
+        form.addEventListener('submit', function (event) {
+            if (!confirm('Are you sure you want to save this employee?')) {
+                event.preventDefault();
+            }
+        });
+
+        var phoneNumberInput = document.querySelector('input[name="phone_number"]');
+        phoneNumberInput.addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    });
+</script>
+{% endblock %}

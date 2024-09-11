@@ -1,0 +1,53 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Assign Equipment{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Assign Equipment</h1>
+    <form method="post" class="mb-4" id="assign-equipment-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Confirm</button>
+    </form>
+
+    <h2 class="mb-3">Employees and Assigned Equipment</h2>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Assigned Equipment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <th scope="row">{{ employee.id }}</th>
+                <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                <td>
+                    {% if employee.equipment.all %}
+                    <ul class="list-unstyled mb-0">
+                        {% for item in employee.equipment.all %}
+                        <li>{{ item.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    No equipment assigned
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('assign-equipment-form');
+        form.addEventListener('submit', function(event) {
+            if (!confirm('Are you sure you want to assign this equipment?')) {
+                event.preventDefault();
+            }
+        });
+    });</script>
+{% endblock %}

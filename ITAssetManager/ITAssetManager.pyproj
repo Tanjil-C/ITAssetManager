@@ -31,12 +31,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app\decorators.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\serializers.py">
+    <Compile Include="app\autocomplete.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\tests.py" />
@@ -59,19 +62,30 @@
     <Folder Include="app\static\app\scripts\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
+    <Folder Include="app\templates\app\equipment\" />
+    <Folder Include="app\templates\app\employee\" />
+    <Folder Include="app\templates\app\systemhealthcheck\" />
     <Folder Include="ITAssetManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\base.css" />
-    <Content Include="app\static\app\content\styles.css" />
     <Content Include="app\static\app\content\login.css" />
     <Content Include="app\static\app\scripts\home.js" />
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\templates\app\base.html" />
-    <Content Include="app\templates\app\equipment_ordering.html" />
-    <Content Include="app\templates\app\item_management.html" />
+    <Content Include="app\templates\app\employee\employee_detail.html" />
+    <Content Include="app\templates\app\employee\employee_list.html" />
+    <Content Include="app\templates\app\employee\employee_form.html" />
+    <Content Include="app\templates\app\employee\employee_confirm_delete.html" />
+    <Content Include="app\templates\app\equipment\equipment_confirm_delete.html" />
     <Content Include="app\templates\app\login.html" />
-    <Content Include="app\templates\app\system_health_check.html" />
+    <Content Include="app\templates\app\systemhealthcheck\maintenance_repair_items.html" />
+    <Content Include="app\templates\app\systemhealthcheck\system_health_check.html" />
+    <Content Include="app\templates\app\Equipment\equipment_list.html" />
+    <Content Include="app\templates\app\Equipment\equipment_detail.html" />
+    <Content Include="app\templates\app\Equipment\equipment_form.html" />
+    <Content Include="app\templates\app\equipment\assign_equipment_list.html" />
+    <Content Include="app\templates\app\systemhealthcheck\low_stock_items.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

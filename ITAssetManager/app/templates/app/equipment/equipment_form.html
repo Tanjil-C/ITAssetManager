@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Equipment Form{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ form.instance.pk|yesno:"Edit Equipment,Add New Equipment" }}</h1>
+    <form method="post" id="equipment-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Cancel</a>
+    </form>
+</div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('equipment-form');
+        form.addEventListener('submit', function(event) {
+            if (!confirm('Are you sure you want to save this equipment?')) {
+                event.preventDefault();
+            }
+        });
+    });</script>
+{% endblock %}
