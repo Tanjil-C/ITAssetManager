@@ -3,36 +3,64 @@
 
 {% block title %}System Health Check{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/systemhealthcheck/systemhealthcheck.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h1>System Health Check</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Low Stock Items</h5>
-                    <p class="card-text">{{ low_stock_count }} items with low stock</p>
-                    <a href="{% url 'low_stock_items' %}" class="btn btn-light">View Details</a>
-                </div>
+<div class="health_container">
+    <div class="blue-outlined-container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 id="title">System Health Check</h1>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Maintenance & Repair</h5>
-                    <p class="card-text">{{ maintenance_count }} in maintenance, {{ repair_count }} in repair</p>
-                    <a href="{% url 'maintenance_repair_items' %}" class="btn btn-light">View Details</a>
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-danger">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Low Stock Items</h5>
+                        <p class="card-text">{{ low_stock_count }} items with low stock</p>
+                        <a href="{% url 'low_stock_items' %}" class="btn btn-light">View Details</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">System Health</h5>
-                    <p class="card-text">{{ system_health|floatformat:2 }}% overall health</p>
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Maintenance & Repair</h5>
+                        <p class="card-text">{{ maintenance_count }} in maintenance, {{ repair_count }} in repair</p>
+                        <a href="{% url 'maintenance_repair_items' %}" class="btn btn-light">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div id="system-health-card" class="card text-white">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">System Health</h5>
+                        <p class="card-text" id="system-health-text">{{ system_health|floatformat:2 }}% overall health</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var systemHealth = parseFloat("{{ system_health|floatformat:2 }}");
+        var systemHealthCard = document.getElementById('system-health-card');
+        var systemHealthText = document.getElementById('system-health-text');
+
+        if (systemHealth >= 75) {
+            systemHealthCard.style.border = '2px solid #28a745'; // Green outline
+            systemHealthText.style.color = '#28a745'; // Green text
+        } else if (systemHealth >= 50) {
+            systemHealthCard.style.border = '2px solid #ffc107'; // Yellow outline
+            systemHealthText.style.color = '#ffc107'; // Yellow text
+        } else {
+            systemHealthCard.style.border = '2px solid #dc3545'; // Red outline
+            systemHealthText.style.color = '#dc3545'; // Red text
+        }
+    });
+</script>
 {% endblock %}

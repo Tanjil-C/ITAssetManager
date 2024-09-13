@@ -1,0 +1,51 @@
+/* Container styles */
+.confirm-delete {
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+    /* Heading styles */
+    .confirm-delete h1 {
+        color: #333;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    /* Button styles */
+    .confirm-delete .btn {
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-size: 1rem;
+        border: none;
+        margin: 40px; /* Add margin to create a gap between buttons */
+    }
+
+    .confirm-delete .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+        .confirm-delete .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+    .confirm-delete .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        text-decoration: none;
+    }
+
+        .confirm-delete .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }

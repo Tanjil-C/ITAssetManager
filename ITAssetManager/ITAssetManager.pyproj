@@ -58,6 +58,8 @@
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
+    <Folder Include="app\static\app\content\equipment\" />
+    <Folder Include="app\static\app\content\systemhealthcheck\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
     <Folder Include="app\templates\" />
@@ -69,7 +71,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\base.css" />
+    <Content Include="app\static\app\content\equipment\assign_equipment_list.css" />
+    <Content Include="app\static\app\content\equipment\equipment_confirm_delete.css" />
+    <Content Include="app\static\app\content\equipment\equipment_detail.css" />
+    <Content Include="app\static\app\content\equipment\equipment_form.css" />
+    <Content Include="app\static\app\content\equipment\equipment_list.css" />
     <Content Include="app\static\app\content\login.css" />
+    <Content Include="app\static\app\content\systemhealthcheck\low_stock_items.css" />
+    <Content Include="app\static\app\content\systemhealthcheck\maintenance_repair_items.css" />
+    <Content Include="app\static\app\content\systemhealthcheck\systemhealthcheck.css" />
     <Content Include="app\static\app\scripts\home.js" />
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\templates\app\base.html" />

@@ -3,9 +3,13 @@
 
 {% block title %}Maintenance & Repair Items{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/systemhealthcheck/maintenance_repair_items.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h1>Maintenance & Repair Items</h1>
+<div class="maintenance_container mt-4">
+    <h1 class="text-center mb-4">Maintenance & Repair Items</h1>
     <a href="{% url 'system_health_check' %}" class="btn btn-secondary mb-3">Back to Health Check</a>
     <h2>Maintenance</h2>
     <table class="table table-striped">

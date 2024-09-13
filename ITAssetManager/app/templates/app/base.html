@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/content/base.css' %}">
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <nav class="navbar">
@@ -20,14 +21,13 @@
             <div class="navbar-menu">
                 <ul class="navbar-nav">
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'employee_list' %}">Employee Management</a></li>
                     <li><a href="{% url 'system_health_check' %}">System Health Check</a></li>
                     <li><a href="{% url 'equipment_list' %}">Equipment Management</a></li>
-                    <li><a href="{% url 'assign_equipment_list' %}">Assign Equipment</a></li>
+                    <li><a href="{% url 'employee_list' %}">Employee Management</a></li>
+                    <li class="navbar-user-actions">
+                        {% include 'app/loginpartial.html' %}
+                    </li>
                 </ul>
-            </div>
-            <div class="navbar-user-actions">
-                {% include 'app/loginpartial.html' %}
             </div>
         </div>
     </nav>

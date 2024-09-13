@@ -3,9 +3,13 @@
 
 {% block title %}Low Stock Items{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/systemhealthcheck/low_stock_items.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h1>Low Stock Items</h1>
+<div class="low_stock_container mt-4">
+    <h1 class="text-center mb-4">Low Stock Items</h1>
     <a href="{% url 'system_health_check' %}" class="btn btn-secondary mb-3">Back to Health Check</a>
     <table class="table table-striped">
         <thead>

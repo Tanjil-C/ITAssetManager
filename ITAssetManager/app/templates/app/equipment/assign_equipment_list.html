@@ -3,6 +3,10 @@
 
 {% block title %}Assign Equipment{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/equipment/assign_equipment_list.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Assign Equipment</h1>
@@ -11,6 +15,8 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Confirm</button>
     </form>
+
+    <a href="{% url 'equipment_list' %}" class="btn btn-secondary mb-4">Back</a>
 
     <h2 class="mb-3">Employees and Assigned Equipment</h2>
     <table class="table table-striped table-hover">
@@ -42,12 +48,14 @@
         </tbody>
     </table>
 </div>
-<script>document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('assign-equipment-form');
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function (event) {
             if (!confirm('Are you sure you want to assign this equipment?')) {
                 event.preventDefault();
             }
         });
-    });</script>
+    });
+</script>
 {% endblock %}

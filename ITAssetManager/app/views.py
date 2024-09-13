@@ -58,7 +58,7 @@ def low_stock_items(request):
     context = {
         'low_stock_items': low_stock_items,
     }
-    return render(request, 'low_stock_items.html', context)
+    return render(request, 'app/systemhealthcheck/low_stock_items.html', context)
 
 @login_required
 def maintenance_repair_items(request):
@@ -68,7 +68,7 @@ def maintenance_repair_items(request):
         'maintenance_items': maintenance_items,
         'repair_items': repair_items,
     }
-    return render(request, 'maintenance_repair_items.html', context)
+    return render(request, 'app/systemhealthcheck/maintenance_repair_items.html', context)
 
 
 @login_required

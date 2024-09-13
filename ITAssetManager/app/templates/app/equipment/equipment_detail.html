@@ -3,6 +3,10 @@
 
 {% block title %}Equipment Detail{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/equipment/equipment_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="equipment-detail">
     <h1>{{ equipment.name }}</h1>
@@ -12,8 +16,13 @@
     <p>Condition Status: {{ equipment.get_condition_status_display }}</p>
     <p>Usage Status: {{ equipment.get_usage_status_display }}</p>
     <p>Assigned Users: {% for user in equipment.assigned_users.all %}{{ user.username }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-    <a class="btn btn-secondary" href="{% url 'equipment_update' equipment.pk %}">Edit</a>
-    <a class="btn btn-danger" href="{% url 'equipment_delete' equipment.pk %}">Delete</a>
-    <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Back to List</a>
+    <div class="action-buttons">
+        <a class="btn btn-secondary" href="{% url 'equipment_update' equipment.pk %}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'equipment_delete' equipment.pk %}">Delete</a>
+        <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Back to List</a>
+    </div>
+    <div class="back-button">
+        <a class="btn btn-primary" href="{% url 'equipment_list' %}">Back</a>
+    </div>
 </div>
 {% endblock %}

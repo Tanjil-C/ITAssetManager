@@ -7,36 +7,38 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%; /* Take the whole width of the screen */
 }
 
-    .navbar .navbar-brand {
-        color: #333;
-        font-size: 1.6rem;
-        font-weight: 500;
-        text-decoration: none;
-    }
+.navbar .navbar-brand {
+    color: #333;
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-decoration: none;
+}
 
-    .navbar .navbar-toggle {
-        display: none; /* Hide toggle button by default */
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-    }
+.navbar .navbar-toggle {
+    display: none; /* Hide toggle button by default */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
 
-    .navbar .navbar-toggle-icon {
-        display: block;
-        width: 25px;
-        height: 2px;
-        background-color: #333;
-        margin: 5px 0;
-    }
+.navbar .navbar-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: #333;
+    margin: 5px 0;
+}
 
 /* Navbar Menu */
 .navbar-menu {
     padding-top: 15px;
     display: flex;
     flex-grow: 1; /* Allow menu to take up space */
+    justify-content: space-between; /* Spread items evenly */
 }
 
 .navbar-nav {
@@ -45,25 +47,26 @@
     margin: 0;
     padding: 0;
     flex-grow: 1; /* Allow the menu items to take up space */
+    justify-content: space-between; /* Spread items evenly */
 }
 
-    .navbar-nav li {
-        margin: 0 15px;
-    }
+.navbar-nav li {
+    margin: 0 15px;
+}
 
-    .navbar-nav a {
-        color: #333;
-        text-decoration: none;
-        font-size: 1rem;
-        transition: color 0.3s ease, border-bottom 0.3s ease;
-        padding: 5px 0;
-        border-bottom: 2px solid transparent; /* Underline effect */
-    }
+.navbar-nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    padding: 5px 0;
+    border-bottom: 2px solid transparent; /* Underline effect */
+}
 
-        .navbar-nav a:hover {
-            color: #007bff; /* Accent color on hover */
-            border-bottom: 2px solid #007bff; /* Underline effect on hover */
-        }
+.navbar-nav a:hover {
+    color: #007bff; /* Accent color on hover */
+    border-bottom: 2px solid #007bff; /* Underline effect on hover */
+}
 
 /* User Actions */
 .navbar-user-actions {
@@ -72,109 +75,36 @@
     margin-left: auto; /* Push user actions to the right */
 }
 
-    .navbar-user-actions ul {
-        display: flex;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .navbar-user-actions li {
-        margin: 0 15px;
-    }
-
-    .navbar-user-actions .navbar-user-greeting {
-        color: #333;
-        font-size: 1rem;
-        padding-right: 10px;
-    }
-
-    .navbar-user-actions .navbar-logoff-button {
-        color: #007bff; /* Accent color for the log off button */
-        text-decoration: none;
-        font-size: 1rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        transition: color 0.3s ease;
-    }
-
-        .navbar-user-actions .navbar-logoff-button:hover {
-            text-decoration: underline;
-        }
-
-/* Dashboard styles */
-main {
-    flex: 1;
-    padding: 40px 20px;
+.navbar-user-actions ul {
     display: flex;
-    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.dashboard {
-    background-color: #ffffff; /* White background for the dashboard */
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 1200px;
-    text-align: center;
+.navbar-user-actions li {
+    margin: 0 15px;
 }
 
-.dashboard-header {
-    margin-bottom: 30px;
-}
-
-h2 {
+.navbar-user-actions .navbar-user-greeting {
     color: #333;
-    font-size: 2.4rem;
-    margin-bottom: 15px;
+    font-size: 1rem;
+    padding-right: 10px;
 }
 
-p {
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-/* Dashboard Grid */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-/* Box styles */
-.box {
-    background-color: #f8f9fa; /* Very light gray for boxes */
-    color: #333;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.navbar-user-actions .navbar-logoff-button {
+    color: #007bff; /* Accent color for the log off button */
+    text-decoration: none;
+    font-size: 1rem;
+    background: none;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    transition: color 0.3s ease;
 }
 
-    .box:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-.box-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: #007bff; /* Accent color */
-}
-
-h3 {
-    margin-top: 10px;
-    font-size: 1.5rem;
-}
-
-p {
-    font-size: 0.9rem;
+.navbar-user-actions .navbar-logoff-button:hover {
+    text-decoration: underline;
 }
 
 /* Footer */
@@ -186,9 +116,9 @@ footer {
     border-top: 1px solid #e0e0e0;
 }
 
-    footer p {
-        margin: 0;
-    }
+footer p {
+    margin: 0;
+}
 
 /* Responsive design */
 @media screen and (max-width: 768px) {
@@ -208,44 +138,20 @@ footer {
         z-index: 1000;
     }
 
-        .navbar-menu.active {
-            display: flex; /* Show menu when toggle button is clicked */
-        }
+    .navbar-menu.active {
+        display: flex; /* Show menu when toggle button is clicked */
+    }
 
     .navbar-nav {
         flex-direction: column;
     }
 
-        .navbar-nav li {
-            margin: 10px 0;
-        }
-
-        .navbar-nav a {
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-    .dashboard {
-        padding: 20px;
+    .navbar-nav li {
+        margin: 10px 0;
     }
 
-    .box {
-        padding: 15px;
+    .navbar-nav a {
+        font-size: 0.9rem;
+        margin: 0;
     }
-
-    h2 {
-        font-size: 1.8rem;
-    }
-
-    h3 {
-        font-size: 1.3rem;
-    }
-
-    .equipment-form, .equipment-detail {
-        padding: 20px;
-    }
-
-        .equipment-form h1, .equipment-detail h1 {
-            font-size: 1.8rem;
-        }
 }

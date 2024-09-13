@@ -10,34 +10,80 @@
         </div>
 
         <div class="dashboard-grid">
-            <a href="{% url 'system_health_check' %}">
+            <a href="{% url 'system_health_check' %}" style="text-decoration: none;">
                 <div class="box">
                     <span class="box-icon">💻</span>
                     <h3>System Health Check</h3>
                     <p>Monitor system performance.</p>
                 </div>
             </a>
-            <a href="{% url 'equipment_list' %}">
+            <a href="{% url 'equipment_list' %}" style="text-decoration: none;">
                 <div class="box">
                     <span class="box-icon">📦</span>
                     <h3>Equipment</h3>
                     <p>Manage equipment<p>
                 </div>
             </a>
-            <a href="{% url 'employee_list' %}">
+            <a href="{% url 'employee_list' %}" style="text-decoration: none;">
                 <div class="box">
                     <span class="box-icon">👨‍💼</span>
                     <h3>Employees</h3>
                     <p>Manage employees</p>
                 </div>
             </a>
-            <a href="{% url 'assign_equipment_list' %}">
-                <div class="box">
-                    <span class="box-icon">🔧</span>
-                    <h3>manage assigning equipments</h3>
-                </div>
-            </a>
         </div>
     </section>
 </main>
 {% endblock %}
+
+
+{% block extra_head %}
+<style>
+    .dashboard {
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        width: 200px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .box-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    .box h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .box p {
+        font-size: 14px;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+

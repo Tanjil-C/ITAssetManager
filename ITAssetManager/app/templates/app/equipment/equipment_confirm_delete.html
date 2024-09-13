@@ -3,6 +3,10 @@
 
 {% block title %}Confirm Delete{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/equipment/equipment_confirm_delete.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="confirm-delete">
     <h1>Are you sure you want to delete "{{ equipment.name }}"?</h1>
@@ -13,3 +17,4 @@
     <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Cancel</a>
 </div>
 {% endblock %}
+

@@ -31,12 +31,11 @@ class EquipmentForm(forms.ModelForm):
 
     class Meta:
         model = Equipment
-        fields = ['name', 'description', 'purchased_date', 'serial_number', 'assigned_users', 'condition_status', 'usage_status', 'stock']
+        fields = ['name', 'description', 'purchased_date', 'serial_number', 'condition_status', 'usage_status', 'stock']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'serial_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'assigned_users': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'condition_status': forms.Select(attrs={'class': 'form-control'}),
             'usage_status': forms.Select(attrs={'class': 'form-control'}),
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -46,7 +45,8 @@ class AssignEquipmentForm(forms.Form):
     employee = forms.ModelChoiceField(
         queryset=Employee.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'}),
-        required=True
+        required=False,
+        empty_label="No user"
     )
     equipment = forms.ModelChoiceField(
         queryset=Equipment.objects.all(),
@@ -59,10 +59,11 @@ class AssignEquipmentForm(forms.Form):
         employee = cleaned_data.get('employee')
         equipment = cleaned_data.get('equipment')
 
-        if equipment and employee:
-            # Check if the equipment is already assigned to the employee
-            if equipment in employee.equipment.all():
-                self.add_error('equipment', 'This equipment is already assigned to the selected employee.')
+        if equipment:
+            if employee:
+                # Check if the equipment is already assigned to the employee
+                if equipment in employee.equipment.all():
+                    self.add_error('equipment', 'This equipment is already assigned to the selected employee.')
 
             # Check if there is stock available
             if equipment.stock <= 0:

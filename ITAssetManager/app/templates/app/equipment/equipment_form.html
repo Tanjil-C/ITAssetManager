@@ -3,22 +3,34 @@
 
 {% block title %}Equipment Form{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/equipment/equipment_form.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4 form-container">
     <h1>{{ form.instance.pk|yesno:"Edit Equipment,Add New Equipment" }}</h1>
     <form method="post" id="equipment-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Cancel</a>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <a class="btn btn-secondary" href="{% url 'equipment_list' %}">Cancel</a>
+        </div>
     </form>
+    <div class="back-button">
+        <a class="btn btn-primary" href="{% url 'equipment_list' %}">Back</a>
+    </div>
 </div>
-<script>document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('equipment-form');
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function (event) {
             if (!confirm('Are you sure you want to save this equipment?')) {
                 event.preventDefault();
             }
         });
-    });</script>
+    });
+</script>
 {% endblock %}
+
