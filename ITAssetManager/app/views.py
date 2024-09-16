@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,9 +8,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Equipment, Employee
 from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
 from .decorators import login_required
-import json
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from .forms import UserRegistrationForm
 from django.contrib.auth import login
 
@@ -39,34 +42,49 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # Extract form data
-            cleaned_data = form.cleaned_data
+            # Check if the user with the same username or email already exists
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email')
 
-            # Convert username to lowercase
-            cleaned_data['username'] = cleaned_data['username'].lower()
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'errors': {'username': [{'message': 'A user with this username already exists.'}]}}, status=400)
+            elif User.objects.filter(email=email).exists():
+                return JsonResponse({'errors': {'email': [{'message': 'A user with this email already exists.'}]}}, status=400)
 
-            # Create a new form instance with modified data
-            modified_form = UserRegistrationForm(data=cleaned_data)
-            
-            if modified_form.is_valid():
-                # Save the user
-                user = modified_form.save(commit=False)
-                user.username = cleaned_data['username']
-                user.save()
-                return JsonResponse({'success': True})
-            else:
-                errors = {}
-                for field, error_list in modified_form.errors.items():
-                    if field == '__all__':
-                        errors[field] = [{'message': error} for error in error_list]
-                    else:
-                        errors[field] = [{'message': error} for error in error_list]
-                
-                return JsonResponse({'errors': errors}, status=400)
-    
+            # If the user doesn't exist, proceed with registration
+            user = form.save(commit=False)
+            user.username = username
+            user.save()
+
+            # Prepare email details
+            subject = 'Welcome to Our Site!'
+            message = render_to_string('email/welcome_email.html', {
+                'user': user,
+                'domain': get_current_site(request).domain,
+            })
+            plain_message = strip_tags(message)
+            email_message = EmailMessage(subject, plain_message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+            # Send email
+            try:
+                email_message.send()
+            except Exception as e:
+                print(f"Failed to send email: {e}")
+
+            return JsonResponse({'success': True})
+        else:
+            # Handle form errors
+            errors = {}
+            for field, error_list in form.errors.items():
+                if field == '__all__':
+                    errors[field] = [{'message': error} for error in error_list]
+                else:
+                    errors[field] = [{'message': error} for error in error_list]
+
+            return JsonResponse({'errors': errors}, status=400)
+
     form = UserRegistrationForm()
     return render(request, 'app/register.html', {'form': form})
-
 
 @login_required
 def system_health_check(request):

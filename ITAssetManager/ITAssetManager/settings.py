@@ -8,6 +8,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = None
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'itassetmanagementappbytanjil@gmail.com'
+EMAIL_HOST_PASSWORD = 'rbfx jzsf hlld uhyw'
+DEFAULT_FROM_EMAIL = 'itassetmanagementappbytanjil@gmail.com'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
