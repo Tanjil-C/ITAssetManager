@@ -1,7 +1,9 @@
-// register.js
-
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('registerForm');
+    const successModal = document.getElementById('successModal');
+    const closeModalButton = document.getElementById('closeModal');
+
+    // Handle form submission
     form.addEventListener('submit', async function (event) {
         event.preventDefault(); // Prevent default form submission
 
@@ -21,7 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = '/'; // Redirect on successful registration
+                // Show success pop-up
+                successModal.style.display = 'block';
+
+                // Redirect after 3 seconds
+                setTimeout(function () {
+                    window.location.href = '/login';
+                }, 25000);
             } else {
                 displayErrors(result.errors); // Display errors
             }
@@ -29,8 +37,14 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         }
     });
+
+    // Close the modal manually if the user clicks on the close button
+    closeModalButton.addEventListener('click', function () {
+        successModal.style.display = 'none';
+    });
 });
 
+// Function to display form errors
 function displayErrors(errors) {
     const errorDiv = document.getElementById('formErrors');
     errorDiv.innerHTML = ''; // Clear previous errors
