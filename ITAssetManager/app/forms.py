@@ -3,6 +3,7 @@ Definition of forms.
 """
 
 from django import forms
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
@@ -19,6 +20,33 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
 
+from django.core.exceptions import ValidationError
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    confirm_password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise ValidationError("Passwords do not match.")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+        
 class EquipmentForm(forms.ModelForm):
     purchased_date = forms.DateField(
         widget=forms.DateInput(

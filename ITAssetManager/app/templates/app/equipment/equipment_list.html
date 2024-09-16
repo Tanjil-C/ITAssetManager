@@ -42,6 +42,7 @@
                             <td>
                                 <a class="btn btn-secondary btn-sm" href="{% url 'equipment_update' equipment.pk %}">Edit</a>
                                 <a class="btn btn-danger btn-sm" href="{% url 'equipment_delete' equipment.pk %}">Delete</a>
+                                <a class="btn btn-secondary btn-sm" href="{% url 'equipment_detail' equipment.pk %}">View</a>
                             </td>
                         </tr>
                         {% endfor %}

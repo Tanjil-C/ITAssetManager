@@ -1,6 +1,6 @@
 {% if user.is_authenticated %}
 <div class="navbar-user-actions">
-    <span class="navbar-user-greeting">Hello {{ user.username }}!</span>
+    <span class="navbar-user-greeting">Hello {{ user.username|upper }}!</span>
     <form id="logoutForm" action="{% url 'logout' %}" method="post" class="navbar-logoff-form">
         {% csrf_token %}
         <button type="submit" class="navbar-logoff-button">Log Off</button>

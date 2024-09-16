@@ -1,13 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Equipment, Employee
 from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
 from .decorators import login_required
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .forms import UserRegistrationForm
+from django.contrib.auth import login
 
 LOW_STOCK_THRESHOLD = 5  # Define what equates to a low stock count
 
@@ -17,7 +21,7 @@ def home(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -30,6 +34,39 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            # Extract form data
+            cleaned_data = form.cleaned_data
+
+            # Convert username to lowercase
+            cleaned_data['username'] = cleaned_data['username'].lower()
+
+            # Create a new form instance with modified data
+            modified_form = UserRegistrationForm(data=cleaned_data)
+            
+            if modified_form.is_valid():
+                # Save the user
+                user = modified_form.save(commit=False)
+                user.username = cleaned_data['username']
+                user.save()
+                return JsonResponse({'success': True})
+            else:
+                errors = {}
+                for field, error_list in modified_form.errors.items():
+                    if field == '__all__':
+                        errors[field] = [{'message': error} for error in error_list]
+                    else:
+                        errors[field] = [{'message': error} for error in error_list]
+                
+                return JsonResponse({'errors': errors}, status=400)
+    
+    form = UserRegistrationForm()
+    return render(request, 'app/register.html', {'form': form})
+
 
 @login_required
 def system_health_check(request):
@@ -69,7 +106,6 @@ def maintenance_repair_items(request):
         'repair_items': repair_items,
     }
     return render(request, 'app/systemhealthcheck/maintenance_repair_items.html', context)
-
 
 @login_required
 def equipment_list(request):
@@ -134,7 +170,6 @@ def assign_equipment_list(request):
     }
     
     return render(request, 'app/equipment/assign_equipment_list.html', context)
-
 
 @login_required
 def employee_list(request):

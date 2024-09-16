@@ -1,0 +1,88 @@
+/* Container */
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h1 {
+    color: #333;
+    font-size: 2.4rem;
+    margin-bottom: 15px;
+}
+
+/* Form */
+form {
+    margin-top: 20px;
+}
+
+    /* Form Elements */
+    form .form-group {
+        margin-bottom: 15px;
+    }
+
+    form .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        font-size: 1rem;
+        background-color: #f9f9f9; /* Light background for inputs */
+    }
+
+        form .form-control:focus {
+            border-color: #007bff; /* Accent color */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            background-color: #ffffff; /* White background on focus */
+        }
+
+    /* Form Labels */
+    form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Form Fields */
+    form .form-field {
+        margin-bottom: 20px;
+    }
+
+/* Buttons */
+.btn-primary {
+    background-color: #007bff; /* Accent color */
+    border-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Darker shade for hover */
+        border-color: #0056b3;
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }

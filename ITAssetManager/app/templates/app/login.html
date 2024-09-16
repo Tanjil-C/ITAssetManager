@@ -23,6 +23,11 @@
             <div class="form-group">
                 <button type="submit">Login</button>
             </div>
+
+            <div class="form-group">
+                <span> Need to register an account? </span>
+                <a href="{% url 'register' %}">Register</a>
+            </div>
         </form>
         {% if error %}
         <div id="login-message">{{ error }}</div>

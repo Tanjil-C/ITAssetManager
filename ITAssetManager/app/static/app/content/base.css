@@ -107,17 +107,30 @@
     text-decoration: underline;
 }
 
-/* Footer */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container.body-content {
+    flex: 1; /* Allow this container to take up the remaining space */
+    padding-bottom: 60px; /* Ensure there is enough space for the footer */
+}
+
 footer {
     background-color: #ffffff; /* Soft white for footer */
     color: #333;
     padding: 15px 0;
     text-align: center;
     border-top: 1px solid #e0e0e0;
-}
-
-footer p {
-    margin: 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 /* Responsive design */

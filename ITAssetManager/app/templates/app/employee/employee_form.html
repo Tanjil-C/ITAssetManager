@@ -3,6 +3,10 @@
 
 {% block title %}Employee Form{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/employee/employee_form.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <h1>{{ form.instance.pk|yesno:"Edit Employee,Add New Employee" }}</h1>
@@ -11,6 +15,7 @@
         {{ form.as_p }}
         <button class="btn btn-primary" type="submit">Save</button>
         <a class="btn btn-secondary" href="{% url 'employee_list' %}">Cancel</a>
+        <a class="btn btn-secondary" href="{% url 'employee_list' %}">Back</a>
     </form>
 </div>
 <script>

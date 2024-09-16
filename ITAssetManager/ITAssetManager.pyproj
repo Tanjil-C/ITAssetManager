@@ -72,17 +72,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\base.css" />
+    <Content Include="app\static\app\content\employee\employee_confirm_delete.css" />
+    <Content Include="app\static\app\content\employee\employee_detail.css" />
+    <Content Include="app\static\app\content\employee\employee_form.css" />
+    <Content Include="app\static\app\content\employee\employee_list.css" />
     <Content Include="app\static\app\content\equipment\assign_equipment_list.css" />
     <Content Include="app\static\app\content\equipment\equipment_confirm_delete.css" />
     <Content Include="app\static\app\content\equipment\equipment_detail.css" />
     <Content Include="app\static\app\content\equipment\equipment_form.css" />
     <Content Include="app\static\app\content\equipment\equipment_list.css" />
     <Content Include="app\static\app\content\login.css" />
+    <Content Include="app\static\app\content\register.css" />
     <Content Include="app\static\app\content\systemhealthcheck\low_stock_items.css" />
     <Content Include="app\static\app\content\systemhealthcheck\maintenance_repair_items.css" />
     <Content Include="app\static\app\content\systemhealthcheck\systemhealthcheck.css" />
     <Content Include="app\static\app\scripts\home.js" />
     <Content Include="app\static\app\scripts\login.js" />
+    <Content Include="app\static\app\scripts\register.js" />
     <Content Include="app\templates\app\base.html" />
     <Content Include="app\templates\app\employee\employee_detail.html" />
     <Content Include="app\templates\app\employee\employee_list.html" />
@@ -90,6 +96,7 @@
     <Content Include="app\templates\app\employee\employee_confirm_delete.html" />
     <Content Include="app\templates\app\equipment\equipment_confirm_delete.html" />
     <Content Include="app\templates\app\login.html" />
+    <Content Include="app\templates\app\register.html" />
     <Content Include="app\templates\app\systemhealthcheck\maintenance_repair_items.html" />
     <Content Include="app\templates\app\systemhealthcheck\system_health_check.html" />
     <Content Include="app\templates\app\Equipment\equipment_list.html" />

@@ -3,6 +3,10 @@
 
 {% block title %}Employee Detail{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/employee/employee_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="employee-detail">
     <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>

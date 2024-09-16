@@ -3,6 +3,11 @@
 
 {% block title %}Confirm Delete{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/employee/employee_confirm_delete.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="confirm-delete">
     <h1>Are you sure you want to delete "{{ employee.first_name }} {{ employee.last_name }}"?</h1>

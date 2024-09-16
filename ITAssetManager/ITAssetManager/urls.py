@@ -13,6 +13,9 @@ urlpatterns = [
     # Logout page
     path('logout/', views.logout_view, name='logout'),
 
+    # Register page
+    path('register/', views.register_view, name='register'), 
+
     # JWT Token endpoints (default views provided by SimpleJWT)
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Default JWT login
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
