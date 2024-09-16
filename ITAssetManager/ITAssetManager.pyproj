@@ -59,6 +59,7 @@
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\content\equipment\" />
+    <Folder Include="app\static\app\content\employee\" />
     <Folder Include="app\static\app\content\systemhealthcheck\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
