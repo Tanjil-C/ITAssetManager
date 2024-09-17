@@ -3,51 +3,58 @@
 
 {% block title %}Maintenance & Repair Items{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'app/content/systemhealthcheck/maintenance_repair_items.css' %}">
-{% endblock %}
-
 {% block content %}
-<div class="maintenance_container mt-4">
-    <h1 class="text-center mb-4">Maintenance & Repair Items</h1>
-    <a href="{% url 'system_health_check' %}" class="btn btn-secondary mb-3">Back to Health Check</a>
-    <h2>Maintenance</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in maintenance_items %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.usage_status }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h2>Repair</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in repair_items %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.usage_status }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<main style="flex: 1; padding: 40px 20px; display: flex; justify-content: center; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div style="width: 100%; max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #333; font-size: 2.4rem; margin-bottom: 15px;">Maintenance & Repair Items</h1>
+            <a href="{% url 'system_health_check' %}" style="display: inline-block; background-color: #6c757d; color: #ffffff; text-align: center; padding: 10px 20px; border-radius: 5px; text-decoration: none; transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s; border: 1px solid #6c757d; margin-bottom: 20px; position: relative;"
+               onmouseover="this.style.backgroundColor='#5a6268'; this.style.borderColor='#5a6268'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';"
+               onmouseout="this.style.backgroundColor='#6c757d'; this.style.borderColor='#6c757d'; this.style.boxShadow='0 2px 4px rgba(0, 0, 0, 0.1)';">Back to Health Check</a>        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h2 style="color: #333; font-size: 2rem; margin-bottom: 10px;">Maintenance</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 0.9rem; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);">
+                <thead style="background-color: #007bff; color: #ffffff;">
+                    <tr>
+                        <th style="padding: 12px 15px; text-align: left;">ID</th>
+                        <th style="padding: 12px 15px; text-align: left;">Name</th>
+                        <th style="padding: 12px 15px; text-align: left;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in maintenance_items %}
+                    <tr style="border-bottom: 1px solid #dddddd;">
+                        <td style="padding: 12px 15px;">{{ item.id }}</td>
+                        <td style="padding: 12px 15px;">{{ item.name }}</td>
+                        <td style="padding: 12px 15px;">{{ item.usage_status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h2 style="color: #333; font-size: 2rem; margin-bottom: 10px;">Repair</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 0.9rem; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);">
+                <thead style="background-color: #007bff; color: #ffffff;">
+                    <tr>
+                        <th style="padding: 12px 15px; text-align: left;">ID</th>
+                        <th style="padding: 12px 15px; text-align: left;">Name</th>
+                        <th style="padding: 12px 15px; text-align: left;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in repair_items %}
+                    <tr style="border-bottom: 1px solid #dddddd;">
+                        <td style="padding: 12px 15px;">{{ item.id }}</td>
+                        <td style="padding: 12px 15px;">{{ item.name }}</td>
+                        <td style="padding: 12px 15px;">{{ item.usage_status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 {% endblock %}

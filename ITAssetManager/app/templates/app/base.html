@@ -10,30 +10,33 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a href="/" class="navbar-brand">ITAssetManager</a>
-            <button class="navbar-toggle" aria-label="Toggle navigation">
-                <span class="navbar-toggle-icon"></span>
-                <span class="navbar-toggle-icon"></span>
-                <span class="navbar-toggle-icon"></span>
-            </button>
-            <div class="navbar-menu">
-                <ul class="navbar-nav">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'system_health_check' %}">System Health Check</a></li>
-                    <li><a href="{% url 'equipment_list' %}">Equipment Management</a></li>
-                    <li><a href="{% url 'employee_list' %}">Employee Management</a></li>
-                    <li class="navbar-user-actions">
-                        {% include 'app/loginpartial.html' %}
-                    </li>
-                </ul>
+    <div class="layout-container">
+        <nav class="navbar">
+            <div>
+                <a href="/" class="navbar-brand">ITAssetManager</a>
+                <button class="navbar-toggle" aria-label="Toggle navigation">
+                    <span class="navbar-toggle-icon"></span>
+                    <span class="navbar-toggle-icon"></span>
+                    <span class="navbar-toggle-icon"></span>
+                </button>
+                <div class="navbar-menu">
+                    <ul class="navbar-nav">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'system_health_check' %}">System Health Check</a></li>
+                        <li><a href="{% url 'equipment_list' %}">Equipment Management</a></li>
+                        <li><a href="{% url 'employee_list' %}">Employee Management</a></li>
+                        <li class="navbar-user-actions">
+                            {% include 'app/loginpartial.html' %}
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="container body-content">
-        {% block content %}{% endblock %}
+        <!-- Main Content Area -->
+        <div class="container body-content">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 
     <footer>
@@ -45,4 +48,5 @@
     <script src="{% static 'app/scripts/respond.js' %}"></script>
     {% block scripts %}{% endblock %}
 </body>
+
 </html>

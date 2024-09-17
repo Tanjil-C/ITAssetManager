@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
+# Model representing equipment information
 class Equipment(models.Model):
     CONDITION_CHOICES = [
         ('new', 'New'),
@@ -10,25 +11,26 @@ class Equipment(models.Model):
         ('poor', 'Poor'),
         ('broken', 'Broken'),
     ]
-
+    
+    # Equipment usage status options
     USAGE_STATUS_CHOICES = [
         ('free', 'Free'),
         ('in_use', 'In Use'),
         ('maintenance', 'Maintenance'),
-        ('in_repair', 'In Repair'),  # New status added
+        ('in_repair', 'In Repair'), 
     ]
 
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)  # Nullable and blankable
     purchased_date = models.DateField(default=date.today)  # Default to current day
     serial_number = models.CharField(max_length=100, unique=True)
-    assigned_users = models.ManyToManyField(User, blank=True)  # Changed to ManyToManyField
+    assigned_users = models.ManyToManyField(User, blank=True) 
     condition_status = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='new')
     usage_status = models.CharField(max_length=15, choices=USAGE_STATUS_CHOICES, default='free')
-    stock = models.PositiveIntegerField(default=0)  # New stock field
+    stock = models.PositiveIntegerField(default=0)  
 
     def __str__(self):
-        return self.name
+        return self.name # Display equipment name in admin or debug views
 
 class Employee(models.Model):
     POSITION_CHOICES = [

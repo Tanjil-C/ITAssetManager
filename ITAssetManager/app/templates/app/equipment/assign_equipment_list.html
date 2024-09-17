@@ -5,49 +5,56 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'app/content/equipment/assign_equipment_list.css' %}">
+<script src="{% static 'app/scripts/search.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Assign Equipment</h1>
-    <form method="post" class="mb-4" id="assign-equipment-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Confirm</button>
-    </form>
+<h1 class="mb-4">Assign Equipment</h1>
+<form method="post" class="mb-4" id="assign-equipment-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Confirm</button>
+</form>
 
-    <a href="{% url 'equipment_list' %}" class="btn btn-secondary mb-4">Back</a>
+<a href="{% url 'equipment_list' %}" class="btn btn-secondary mb-4">Back</a>
 
-    <h2 class="mb-3">Employees and Assigned Equipment</h2>
-    <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Assigned Equipment</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <th scope="row">{{ employee.id }}</th>
-                <td>{{ employee.first_name }} {{ employee.last_name }}</td>
-                <td>
-                    {% if employee.equipment.all %}
-                    <ul class="list-unstyled mb-0">
-                        {% for item in employee.equipment.all %}
-                        <li>{{ item.name }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    No equipment assigned
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h2 class="mb-3">Employees and Assigned Equipment</h2>
+
+<div style="margin-bottom: 20px; text-align: left;">
+    <input type="search" data-search="employeeTableBody"
+           placeholder="Search by Employee Name..."
+           style="width: 100%; max-width: 300px; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease; outline: none;">
 </div>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Assigned Equipment</th>
+        </tr>
+    </thead>
+    <tbody id="employeeTableBody">
+        {% for employee in employees %}
+        <tr>
+            <th scope="row">{{ employee.id }}</th>
+            <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+            <td>
+                {% if employee.equipment.all %}
+                <ul class="list-unstyled mb-0">
+                    {% for item in employee.equipment.all %}
+                    <li>{{ item.name }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                No equipment assigned
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('assign-equipment-form');

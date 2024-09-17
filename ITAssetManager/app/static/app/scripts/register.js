@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Redirect after 3 seconds
                 setTimeout(function () {
                     window.location.href = '/login';
-                }, 25000);
+                }, 20000);
             } else {
                 displayErrors(result.errors); // Display errors
             }

@@ -4,30 +4,44 @@
 {% block title %}Low Stock Items{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'app/content/systemhealthcheck/low_stock_items.css' %}">
+<link rel="stylesheet" href="{% static 'app/content/low_stock/low_stock_items.css' %}">
+<script src="{% static 'app/scripts/search.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
-<div class="low_stock_container mt-4">
-    <h1 class="text-center mb-4">Low Stock Items</h1>
-    <a href="{% url 'system_health_check' %}" class="btn btn-secondary mb-3">Back to Health Check</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in low_stock_items %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.stock }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<main style="flex: 1; padding: 40px 20px; display: flex; justify-content: center; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div style="width: 100%; max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #333; font-size: 2.4rem; margin-bottom: 15px;">Low Stock Items</h1>
+            <a href="{% url 'system_health_check' %}" style="display: inline-block; background-color: #6c757d; color: #ffffff; text-align: center; padding: 10px 20px; border-radius: 5px; text-decoration: none; transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s; border: 1px solid #6c757d; margin-bottom: 20px; position: relative;"
+               onmouseover="this.style.backgroundColor='#5a6268'; this.style.borderColor='#5a6268'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';"
+               onmouseout="this.style.backgroundColor='#6c757d'; this.style.borderColor='#6c757d'; this.style.boxShadow='0 2px 4px rgba(0, 0, 0, 0.1)';">Back to Health Check</a>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <input type="search" data-search="lowStockTableBody"
+                   placeholder="Search items by name..."
+                   style="width: 100%; max-width: 300px; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease; outline: none; margin-bottom: 20px;">
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);">
+                <thead style="background-color: #007bff; color: #ffffff;">
+                    <tr>
+                        <th style="padding: 12px 15px; text-align: left;">ID</th>
+                        <th style="padding: 12px 15px; text-align: left;">Name</th>
+                        <th style="padding: 12px 15px; text-align: left;">Stock</th>
+                    </tr>
+                </thead>
+                <tbody id="lowStockTableBody">
+                    {% for item in low_stock_items %}
+                    <tr style="border-bottom: 1px solid #dddddd;">
+                        <td style="padding: 12px 15px;">{{ item.id }}</td>
+                        <td style="padding: 12px 15px;">{{ item.name }}</td>
+                        <td style="padding: 12px 15px;">{{ item.stock }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 {% endblock %}

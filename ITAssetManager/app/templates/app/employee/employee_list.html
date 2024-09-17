@@ -5,12 +5,20 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'app/content/employee/employee_list.css' %}">
+<script src="{% static 'app/scripts/search.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Employee List</h1>
     <a class="add-employee-btn" href="{% url 'employee_create' %}">Add New Employee</a>
+
+    <div style="margin-bottom: 20px; text-align: left;">
+        <input type="search" data-search="employeeTableBody"
+               placeholder="Search employees by name..."
+               style="width: 100%; max-width: 300px; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease; outline: none;">
+    </div>
+
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
@@ -21,7 +29,7 @@
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="employeeTableBody">
             {% for employee in employees %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>

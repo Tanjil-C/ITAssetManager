@@ -169,6 +169,7 @@ p {
 
 /* Responsive design */
 @media screen and (max-width: 768px) {
+
     .dashboard {
         padding: 20px;
     }

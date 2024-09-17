@@ -5,6 +5,7 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'app/content/equipment/equipment_list.css' %}">
+<script src="{% static 'app/scripts/search.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -21,6 +22,11 @@
         </div>
 
         <div class="dashboard-grid">
+            <div style="margin-bottom: 20px; text-align: left;">
+                <input type="search" data-search="equipmentTableBody"
+                       placeholder="Search equipment by name..."
+                       style="width: 100%; max-width: 300px; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease; outline: none;">
+            </div>
             <div class="box">
                 <table class="styled-table">
                     <thead>
@@ -31,7 +37,7 @@
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="equipmentTableBody">
                         {% for equipment in equipments %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>

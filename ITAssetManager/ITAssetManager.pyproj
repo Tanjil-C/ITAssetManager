@@ -39,9 +39,6 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\autocomplete.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -84,12 +81,11 @@
     <Content Include="app\static\app\content\equipment\equipment_list.css" />
     <Content Include="app\static\app\content\login.css" />
     <Content Include="app\static\app\content\register.css" />
-    <Content Include="app\static\app\content\systemhealthcheck\low_stock_items.css" />
-    <Content Include="app\static\app\content\systemhealthcheck\maintenance_repair_items.css" />
     <Content Include="app\static\app\content\systemhealthcheck\systemhealthcheck.css" />
     <Content Include="app\static\app\scripts\home.js" />
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\static\app\scripts\register.js" />
+    <Content Include="app\static\app\scripts\search.js" />
     <Content Include="app\templates\app\base.html" />
     <Content Include="app\templates\app\employee\employee_detail.html" />
     <Content Include="app\templates\app\employee\employee_list.html" />

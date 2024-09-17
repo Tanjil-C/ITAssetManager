@@ -22,6 +22,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 
 from django.core.exceptions import ValidationError
 
+# Custom user registration form with password confirmation validation
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True)
@@ -46,7 +47,8 @@ class UserRegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-        
+
+# Form to handle equipment data with customized widgets
 class EquipmentForm(forms.ModelForm):
     purchased_date = forms.DateField(
         widget=forms.DateInput(
@@ -69,6 +71,7 @@ class EquipmentForm(forms.ModelForm):
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
+# Form to assign equipment to employees with validation for equipment assignment
 class AssignEquipmentForm(forms.Form):
     employee = forms.ModelChoiceField(
         queryset=Employee.objects.all(),
@@ -80,8 +83,9 @@ class AssignEquipmentForm(forms.Form):
         queryset=Equipment.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'}),
         required=True
-    )
-
+    )    
+    
+    # Clean method to check assignment and stock availability
     def clean(self):
         cleaned_data = super().clean()
         employee = cleaned_data.get('employee')
@@ -99,6 +103,7 @@ class AssignEquipmentForm(forms.Form):
 
         return cleaned_data
 
+# Employee form with phone number validation and multi-select for equipment
 class EmployeeForm(forms.ModelForm):
     hire_date = forms.DateField(
         widget=forms.DateInput(
