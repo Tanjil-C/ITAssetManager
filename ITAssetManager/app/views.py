@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Equipment, Employee
 from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
-from .decorators import login_required
+from .decorators import login_required, user_is_superuser
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
@@ -16,6 +16,7 @@ from django.utils.html import strip_tags
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test
 
 import logging
 
@@ -150,6 +151,7 @@ def equipment_detail(request, pk):
     equipment = get_object_or_404(Equipment, pk=pk)
     return render(request, 'app/equipment/equipment_detail.html', {'equipment': equipment})
 
+@user_is_superuser
 @login_required
 def equipment_create(request):
     # Handle creation of new equipment
@@ -167,6 +169,7 @@ def equipment_create(request):
         form = EquipmentForm()
     return render(request, 'app/equipment/equipment_form.html', {'form': form})
 
+@user_is_superuser
 @login_required
 def equipment_update(request, pk):
     # Handle updating existing equipment
@@ -185,6 +188,7 @@ def equipment_update(request, pk):
         form = EquipmentForm(instance=equipment)
     return render(request, 'app/equipment/equipment_form.html', {'form': form})
 
+@user_is_superuser
 @login_required
 def equipment_delete(request, pk):
     # Handle deletion of equipment
@@ -196,6 +200,7 @@ def equipment_delete(request, pk):
         return redirect('equipment_list')
     return render(request, 'app/equipment/equipment_confirm_delete.html', {'equipment': equipment})
 
+@user_is_superuser
 @login_required
 def assign_equipment_list(request):
     # Handle assignment of equipment to employees
@@ -246,6 +251,7 @@ def employee_detail(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     return render(request, 'app/employee/employee_detail.html', {'employee': employee})
 
+@user_is_superuser
 @login_required
 def employee_create(request):
     # Handle creation of a new employee
@@ -263,6 +269,7 @@ def employee_create(request):
         form = EmployeeForm()
     return render(request, 'app/employee/employee_form.html', {'form': form})
 
+@user_is_superuser
 @login_required
 def employee_update(request, pk):
     # Handle updating an existing employee
@@ -281,6 +288,7 @@ def employee_update(request, pk):
         form = EmployeeForm(instance=employee)
     return render(request, 'app/employee/employee_form.html', {'form': form})
 
+@user_is_superuser
 @login_required
 def employee_delete(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
@@ -292,7 +300,7 @@ def employee_delete(request, pk):
     return render(request, 'app/employee/employee_confirm_delete.html', {'employee': employee})
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@login_required
 def protected_view(request):
     # Example of a protected API view that requires authentication
     logger.info('Access to protected view granted.')
@@ -327,3 +335,22 @@ def trigger_error(request):
         return HttpResponse('An error occurred and was logged.', status=500)
 
     return HttpResponse('No error occurred.', status=200)
+
+@user_is_superuser
+def admin_console(request):
+    users = User.objects.all()
+    return render(request, 'app/admin/admin_console.html', {'users': users})
+
+@user_is_superuser
+@user_passes_test(lambda u: u.is_superuser)
+def toggle_superuser_status(request, user_id):
+    user = User.objects.get(id=user_id)
+    if user.is_superuser:
+        user.is_superuser = False
+        messages.success(request, f"{user.username} is no longer an admin.")
+    else:
+        user.is_superuser = True
+        messages.success(request, f"{user.username} is now an admin.")
+    user.save()
+    logger.info(f"Superuser status for user {user.username} has been updated.")
+    return redirect('admin_console')

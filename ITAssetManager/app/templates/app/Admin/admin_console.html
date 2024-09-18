@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Admin's Console{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/admin/admin_console.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Admin's Console</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Superuser Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.is_superuser }}</td>
+            <td>
+                <form action="{% url 'toggle_superuser_status' user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if user.is_superuser %}
+                        Remove Admin
+                        {% else %}
+                        Make Admin
+                        {% endif %}
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
