@@ -36,8 +36,10 @@ class Employee(models.Model):
     POSITION_CHOICES = [
         ('manager', 'Manager'),
         ('technician', 'Technician'),
-        ('administrator', 'Administrator'),
         ('intern', 'Intern'),
+        ('contractor', 'Contractor'),
+        ('receptionist', 'Receptionist'),
+        ('hr manager', 'Hr Manager'),
     ]
 
     first_name = models.CharField(max_length=50)

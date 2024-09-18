@@ -25,7 +25,7 @@ urlpatterns = [
 
     # Admin interface
     path('admin/', admin.site.urls),
-
+    
     # Main pages
     path('systemhealthcheck/system-health-check/', views.system_health_check, name='system_health_check'),
     path('systemhealthcheck/low_stock_items/', views.low_stock_items, name='low_stock_items'),

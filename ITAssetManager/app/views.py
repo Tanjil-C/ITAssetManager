@@ -14,7 +14,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .forms import UserRegistrationForm
-from django.contrib.auth import login
+from django.contrib import messages
 
 LOW_STOCK_THRESHOLD = 5  # Define what equates to a low stock count
 
@@ -42,7 +42,6 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # Check if the user with the same username or email already exists
             username = form.cleaned_data.get('username').lower()
             email = form.cleaned_data.get('email')
 
@@ -51,12 +50,10 @@ def register_view(request):
             elif User.objects.filter(email=email).exists():
                 return JsonResponse({'errors': {'email': [{'message': 'A user with this email already exists.'}]}}, status=400)
 
-            # If the user doesn't exist, proceed with registration
             user = form.save(commit=False)
             user.username = username
             user.save()
 
-            # Prepare email details
             subject = 'Welcome to Our Site!'
             message = render_to_string('email/welcome_email.html', {
                 'user': user,
@@ -65,7 +62,6 @@ def register_view(request):
             plain_message = strip_tags(message)
             email_message = EmailMessage(subject, plain_message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
-            # Send email
             try:
                 email_message.send()
             except Exception as e:
@@ -73,7 +69,6 @@ def register_view(request):
 
             return JsonResponse({'success': True})
         else:
-            # Handle form errors
             errors = {}
             for field, error_list in form.errors.items():
                 if field == '__all__':
@@ -93,7 +88,6 @@ def system_health_check(request):
     repair_count = Equipment.objects.filter(usage_status='in_repair').count()
     total_equipment = Equipment.objects.count()
 
-    # Calculate system health as a percentage
     if total_equipment > 0:
         system_health = ((total_equipment - (low_stock_count + maintenance_count + repair_count)) / total_equipment) * 100
     else:
@@ -141,7 +135,10 @@ def equipment_create(request):
         form = EquipmentForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Equipment successfully created!')
             return redirect('equipment_list')
+        else:
+            messages.error(request, 'Failed to create equipment. Please check the form for errors.')
     else:
         form = EquipmentForm()
     return render(request, 'app/equipment/equipment_form.html', {'form': form})
@@ -153,7 +150,10 @@ def equipment_update(request, pk):
         form = EquipmentForm(request.POST, instance=equipment)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Equipment successfully updated!')
             return redirect('equipment_list')
+        else:
+            messages.error(request, 'Failed to update equipment. Please check the form for errors.')
     else:
         form = EquipmentForm(instance=equipment)
     return render(request, 'app/equipment/equipment_form.html', {'form': form})
@@ -163,6 +163,7 @@ def equipment_delete(request, pk):
     equipment = get_object_or_404(Equipment, pk=pk)
     if request.method == "POST":
         equipment.delete()
+        messages.success(request, 'Equipment successfully deleted!')
         return redirect('equipment_list')
     return render(request, 'app/equipment/equipment_confirm_delete.html', {'equipment': equipment})
 
@@ -174,7 +175,10 @@ def assign_equipment_list(request):
             employee = form.cleaned_data['employee']
             equipment = form.cleaned_data['equipment']
             employee.equipment.add(equipment)
-            return redirect('assign_equipment_list')  
+            messages.success(request, 'Equipment successfully assigned to employee!')
+            return redirect('assign_equipment_list')
+        else:
+            messages.error(request, 'Failed to assign equipment. Please check the form for errors.')
     else:
         form = AssignEquipmentForm()
     
@@ -205,7 +209,10 @@ def employee_create(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Employee successfully created!')
             return redirect('employee_list')
+        else:
+            messages.error(request, 'Failed to create employee. Please check the form for errors.')
     else:
         form = EmployeeForm()
     return render(request, 'app/employee/employee_form.html', {'form': form})
@@ -217,7 +224,10 @@ def employee_update(request, pk):
         form = EmployeeForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Employee successfully updated!')
             return redirect('employee_list')
+        else:
+            messages.error(request, 'Failed to update employee. Please check the form for errors.')
     else:
         form = EmployeeForm(instance=employee)
     return render(request, 'app/employee/employee_form.html', {'form': form})
@@ -227,6 +237,7 @@ def employee_delete(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == "POST":
         employee.delete()
+        messages.success(request, 'Employee successfully deleted!')
         return redirect('employee_list')
     return render(request, 'app/employee/employee_confirm_delete.html', {'employee': employee})
 

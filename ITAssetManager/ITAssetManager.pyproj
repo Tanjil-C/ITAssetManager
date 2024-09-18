@@ -82,6 +82,7 @@
     <Content Include="app\static\app\content\login.css" />
     <Content Include="app\static\app\content\register.css" />
     <Content Include="app\static\app\content\systemhealthcheck\systemhealthcheck.css" />
+    <Content Include="app\static\app\scripts\base.js" />
     <Content Include="app\static\app\scripts\home.js" />
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\static\app\scripts\register.js" />

@@ -24,6 +24,7 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Position</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Actions</th>
@@ -36,7 +37,8 @@
                 <td>
                     <a class="employee-link" href="{% url 'employee_detail' employee.pk %}">{{ employee.first_name }} {{ employee.last_name }}</a>
                 </td>
-                <td>{{ employee.email }}</td>
+                <td>{{ employee.position|title }}</td>
+                <td>{{ employee.email|title }}</td>
                 <td>{{ employee.phone_number }}</td>
                 <td>
                     <a class="btn btn-secondary btn-sm" style="text-decoration: none;" href="{% url 'employee_update' employee.pk %}">Edit</a>

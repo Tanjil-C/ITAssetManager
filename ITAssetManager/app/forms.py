@@ -103,7 +103,7 @@ class AssignEquipmentForm(forms.Form):
 
         return cleaned_data
 
-# Employee form with phone number validation and multi-select for equipment
+# Employee form 
 class EmployeeForm(forms.ModelForm):
     hire_date = forms.DateField(
         widget=forms.DateInput(
@@ -125,15 +125,9 @@ class EmployeeForm(forms.ModelForm):
         })
     )
 
-    equipment = forms.ModelMultipleChoiceField(
-        queryset=Equipment.objects.all(),
-        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
-        required=False
-    )
-
     class Meta:
         model = Employee
-        fields = ['first_name', 'last_name', 'email', 'phone_number', 'position', 'hire_date', 'equipment']
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'position', 'hire_date']
         widgets = {
             'position': forms.Select(attrs={'class': 'form-control'}),
         }
