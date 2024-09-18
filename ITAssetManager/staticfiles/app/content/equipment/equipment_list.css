@@ -4,6 +4,10 @@ main {
     padding: 40px 20px;
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard {
@@ -165,6 +169,7 @@ p {
 
 /* Responsive design */
 @media screen and (max-width: 768px) {
+
     .dashboard {
         padding: 20px;
     }

@@ -33,7 +33,6 @@
     margin: 5px 0;
 }
 
-/* Navbar Menu */
 .navbar-menu {
     padding-top: 15px;
     display: flex;
@@ -133,26 +132,24 @@ footer {
     width: 100%;
 }
 
-/* Responsive design */
 @media screen and (max-width: 768px) {
     .navbar .navbar-toggle {
-        display: block; /* Show toggle button on small screens */
+        display: block; 
     }
 
     .navbar-menu {
-        display: none; /* Hide menu by default on small screens */
+        display: none; 
         flex-direction: column;
-        position: absolute;
         top: 100%;
         left: 0;
         right: 0;
-        background-color: #ffffff; /* Background for the menu */
+        background-color: #ffffff; 
         padding: 15px 30px;
         z-index: 1000;
     }
 
     .navbar-menu.active {
-        display: flex; /* Show menu when toggle button is clicked */
+        display: flex;
     }
 
     .navbar-nav {
