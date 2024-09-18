@@ -136,3 +136,47 @@ SIMPLE_JWT = {
        'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
        'TOKEN_TYPE_CLAIM': 'token_type',
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file_error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'logs',
+                'error.log'  # File for error logs
+            ),
+            'formatter': 'verbose',  # Includes date and time
+        },
+        'file_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'logs',
+                'debug.log'  # File for debug logs
+            ),
+            'formatter': 'verbose',  # Includes date and time
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file_error', 'file_debug'], 
+            'level': 'DEBUG',  # Log both debug and error messages
+            'propagate': True,
+        },
+    },
+}

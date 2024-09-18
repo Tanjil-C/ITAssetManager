@@ -15,45 +15,60 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .forms import UserRegistrationForm
 from django.contrib import messages
+from django.http import HttpResponse
 
-LOW_STOCK_THRESHOLD = 5  # Define what equates to a low stock count
+import logging
+
+logger = logging.getLogger('django')
+
+LOW_STOCK_THRESHOLD = 10
 
 @login_required
 def home(request):
     return render(request, 'app/home.html', {'title': 'Home'})
 
 def login_view(request):
+    # Handle login for users
     if request.method == 'POST':
         username = request.POST['username'].lower()
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            logger.info(f'User {username} logged in successfully.')
             return redirect('home')
         else:
+            logger.warning(f'Failed login attempt for username: {username}.')
             return render(request, 'app/login.html', {'title': 'Login', 'error': 'Invalid credentials'})
     return render(request, 'app/login.html', {'title': 'Login'})
 
 def logout_view(request):
+    # Log out the current user
     logout(request)
+    logger.info('User logged out successfully.')
     return redirect('login')
 
 def register_view(request):
+    # Handle user registration
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username').lower()
             email = form.cleaned_data.get('email')
 
+            # Check for existing users
             if User.objects.filter(username=username).exists():
+                logger.warning(f'Registration attempt with existing username: {username}.')
                 return JsonResponse({'errors': {'username': [{'message': 'A user with this username already exists.'}]}}, status=400)
             elif User.objects.filter(email=email).exists():
+                logger.warning(f'Registration attempt with existing email: {email}.')
                 return JsonResponse({'errors': {'email': [{'message': 'A user with this email already exists.'}]}}, status=400)
 
             user = form.save(commit=False)
             user.username = username
             user.save()
 
+            # Send a welcome email to the new user
             subject = 'Welcome to Our Site!'
             message = render_to_string('email/welcome_email.html', {
                 'user': user,
@@ -64,8 +79,9 @@ def register_view(request):
 
             try:
                 email_message.send()
+                logger.info(f'Welcome email sent to {email}.')
             except Exception as e:
-                print(f"Failed to send email: {e}")
+                logger.error(f'Failed to send email to {email}. Error: {e}')
 
             return JsonResponse({'success': True})
         else:
@@ -83,6 +99,7 @@ def register_view(request):
 
 @login_required
 def system_health_check(request):
+    # Check and return the system health metrics
     low_stock_count = Equipment.objects.filter(stock__lt=LOW_STOCK_THRESHOLD).count()
     maintenance_count = Equipment.objects.filter(usage_status='maintenance').count()
     repair_count = Equipment.objects.filter(usage_status='in_repair').count()
@@ -103,6 +120,7 @@ def system_health_check(request):
 
 @login_required
 def low_stock_items(request):
+    # Display items with stock below the threshold
     low_stock_items = Equipment.objects.filter(stock__lt=LOW_STOCK_THRESHOLD)
     context = {
         'low_stock_items': low_stock_items,
@@ -111,6 +129,7 @@ def low_stock_items(request):
 
 @login_required
 def maintenance_repair_items(request):
+    # Display items in maintenance or repair
     maintenance_items = Equipment.objects.filter(usage_status='maintenance')
     repair_items = Equipment.objects.filter(usage_status='in_repair')
     context = {
@@ -121,23 +140,28 @@ def maintenance_repair_items(request):
 
 @login_required
 def equipment_list(request):
+    # List all equipment
     equipments = Equipment.objects.all()
     return render(request, 'app/equipment/equipment_list.html', {'equipments': equipments})
 
 @login_required
 def equipment_detail(request, pk):
+    # Display details of a specific equipment
     equipment = get_object_or_404(Equipment, pk=pk)
     return render(request, 'app/equipment/equipment_detail.html', {'equipment': equipment})
 
 @login_required
 def equipment_create(request):
+    # Handle creation of new equipment
     if request.method == "POST":
         form = EquipmentForm(request.POST)
         if form.is_valid():
             form.save()
+            logger.info('New equipment created successfully.')
             messages.success(request, 'Equipment successfully created!')
             return redirect('equipment_list')
         else:
+            logger.error('Failed to create equipment. Form errors: {}'.format(form.errors))
             messages.error(request, 'Failed to create equipment. Please check the form for errors.')
     else:
         form = EquipmentForm()
@@ -145,14 +169,17 @@ def equipment_create(request):
 
 @login_required
 def equipment_update(request, pk):
+    # Handle updating existing equipment
     equipment = get_object_or_404(Equipment, pk=pk)
     if request.method == "POST":
         form = EquipmentForm(request.POST, instance=equipment)
         if form.is_valid():
             form.save()
+            logger.info(f'Equipment {pk} updated successfully.')
             messages.success(request, 'Equipment successfully updated!')
             return redirect('equipment_list')
         else:
+            logger.error('Failed to update equipment. Form errors: {}'.format(form.errors))
             messages.error(request, 'Failed to update equipment. Please check the form for errors.')
     else:
         form = EquipmentForm(instance=equipment)
@@ -160,24 +187,38 @@ def equipment_update(request, pk):
 
 @login_required
 def equipment_delete(request, pk):
+    # Handle deletion of equipment
     equipment = get_object_or_404(Equipment, pk=pk)
     if request.method == "POST":
         equipment.delete()
+        logger.info(f'Equipment {pk} deleted successfully.')
         messages.success(request, 'Equipment successfully deleted!')
         return redirect('equipment_list')
     return render(request, 'app/equipment/equipment_confirm_delete.html', {'equipment': equipment})
 
 @login_required
 def assign_equipment_list(request):
+    # Handle assignment of equipment to employees
     if request.method == 'POST':
         form = AssignEquipmentForm(request.POST)
         if form.is_valid():
             employee = form.cleaned_data['employee']
             equipment = form.cleaned_data['equipment']
-            employee.equipment.add(equipment)
-            messages.success(request, 'Equipment successfully assigned to employee!')
+            
+            # Check if there is stock available before assigning
+            if equipment.stock > 0:
+                employee.equipment.add(equipment)
+                equipment.stock -= 1
+                equipment.save()
+                logger.info(f'Equipment {equipment.id} assigned to employee {employee.id}.')
+                messages.success(request, 'Equipment successfully assigned to employee!')
+            else:
+                logger.warning(f'Attempt to assign equipment {equipment.id} with no stock.')
+                messages.error(request, 'No stock available for this equipment.')
+            
             return redirect('assign_equipment_list')
         else:
+            logger.error('Failed to assign equipment. Form errors: {}'.format(form.errors))
             messages.error(request, 'Failed to assign equipment. Please check the form for errors.')
     else:
         form = AssignEquipmentForm()
@@ -195,23 +236,28 @@ def assign_equipment_list(request):
 
 @login_required
 def employee_list(request):
+    # List all employees
     employees = Employee.objects.all()
     return render(request, 'app/employee/employee_list.html', {'employees': employees})
 
 @login_required
 def employee_detail(request, pk):
+    # Display details of a specific employee
     employee = get_object_or_404(Employee, pk=pk)
     return render(request, 'app/employee/employee_detail.html', {'employee': employee})
 
 @login_required
 def employee_create(request):
+    # Handle creation of a new employee
     if request.method == "POST":
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
+            logger.info('New employee created successfully.')
             messages.success(request, 'Employee successfully created!')
             return redirect('employee_list')
         else:
+            logger.error('Failed to create employee. Form errors: {}'.format(form.errors))
             messages.error(request, 'Failed to create employee. Please check the form for errors.')
     else:
         form = EmployeeForm()
@@ -219,14 +265,17 @@ def employee_create(request):
 
 @login_required
 def employee_update(request, pk):
+    # Handle updating an existing employee
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == "POST":
         form = EmployeeForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
+            logger.info(f'Employee {pk} updated successfully.')
             messages.success(request, 'Employee successfully updated!')
             return redirect('employee_list')
         else:
+            logger.error('Failed to update employee. Form errors: {}'.format(form.errors))
             messages.error(request, 'Failed to update employee. Please check the form for errors.')
     else:
         form = EmployeeForm(instance=employee)
@@ -237,6 +286,7 @@ def employee_delete(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == "POST":
         employee.delete()
+        logger.info(f'Employee {pk} deleted successfully.')
         messages.success(request, 'Employee successfully deleted!')
         return redirect('employee_list')
     return render(request, 'app/employee/employee_confirm_delete.html', {'employee': employee})
@@ -244,17 +294,36 @@ def employee_delete(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def protected_view(request):
+    # Example of a protected API view that requires authentication
+    logger.info('Access to protected view granted.')
     return JsonResponse({'message': 'You have access to this protected view.'})
+
+
 
 @api_view(['POST'])
 def jwt_login(request):
+    # Handle JWT login and return tokens
     username = request.data.get('username')
     password = request.data.get('password')
     user = authenticate(request, username=username, password=password)
     if user is not None:
         refresh = RefreshToken.for_user(user)
+        logger.info(f'User {username} successfully authenticated with JWT.')
         return JsonResponse({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         })
+    logger.warning(f'Failed JWT authentication attempt for username: {username}.')
     return JsonResponse({'error': 'Invalid credentials'}, status=400)
+
+
+def trigger_error(request):
+    try:
+        # Deliberate error
+        result = 1 / 0
+    except Exception as e:
+        # Log the error
+        logger.error('Deliberate error occurred: %s', str(e))
+        return HttpResponse('An error occurred and was logged.', status=500)
+
+    return HttpResponse('No error occurred.', status=200)
