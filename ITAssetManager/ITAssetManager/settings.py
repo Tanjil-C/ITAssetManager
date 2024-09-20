@@ -137,9 +137,6 @@ SIMPLE_JWT = {
        'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-if not os.path.exists(os.path.join(BASE_DIR, 'logs')):
-    os.makedirs(os.path.join(BASE_DIR, 'logs'))
-    
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -148,37 +145,25 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
     },
     'handlers': {
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'logs',
-                'error.log'  # File for error logs
-            ),
-            'formatter': 'verbose',  # Includes date and time
+            'filename': '/tmp/error.log',  # Write logs to /tmp/ directory
+            'formatter': 'verbose',
         },
         'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'logs',
-                'debug.log'  # File for debug logs
-            ),
-            'formatter': 'verbose',  # Includes date and time
+            'filename': '/tmp/debug.log',  # Write logs to /tmp/ directory
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file_error', 'file_debug'], 
-            'level': 'DEBUG',  # Log both debug and error messages
+            'handlers': ['file_error', 'file_debug'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
