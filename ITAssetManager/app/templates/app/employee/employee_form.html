@@ -10,7 +10,7 @@
 {% block content %}
 <div class="container mt-4">
     <h1>{{ form.instance.pk|yesno:"Edit Employee,Add New Employee" }}</h1>
-    <form method="post" id="employee-form">
+    <form method="post" id="employee-form" style="width: 15%;">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary" type="submit">Save</button>

@@ -12,6 +12,6 @@ def user_is_superuser(view_func):
     def _wrapped_view(request, *args, **kwargs):
         if not request.user.is_superuser:
             # Return a 404 with custom message
-            return HttpResponse('404 Not Authorized', status=404)
+            return HttpResponse('403 Forbidden || Not Authorized', status=403)
         return view_func(request, *args, **kwargs)
     return _wrapped_view

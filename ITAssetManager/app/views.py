@@ -1,22 +1,23 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Equipment, Employee
-from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
 from .decorators import login_required, user_is_superuser
+from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
+from .forms import UserRegistrationForm
+from django.contrib import messages
+from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from .forms import UserRegistrationForm
-from django.contrib import messages
-from django.http import HttpResponse
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.conf import settings
+
 
 import logging
 
@@ -299,15 +300,6 @@ def employee_delete(request, pk):
         return redirect('employee_list')
     return render(request, 'app/employee/employee_confirm_delete.html', {'employee': employee})
 
-@api_view(['GET'])
-@login_required
-def protected_view(request):
-    # Example of a protected API view that requires authentication
-    logger.info('Access to protected view granted.')
-    return JsonResponse({'message': 'You have access to this protected view.'})
-
-
-
 @api_view(['POST'])
 def jwt_login(request):
     # Handle JWT login and return tokens
@@ -324,7 +316,7 @@ def jwt_login(request):
     logger.warning(f'Failed JWT authentication attempt for username: {username}.')
     return JsonResponse({'error': 'Invalid credentials'}, status=400)
 
-
+@login_required
 def trigger_error(request):
     try:
         # Deliberate error
@@ -337,20 +329,51 @@ def trigger_error(request):
     return HttpResponse('No error occurred.', status=200)
 
 @user_is_superuser
+@login_required
 def admin_console(request):
     users = User.objects.all()
     return render(request, 'app/admin/admin_console.html', {'users': users})
 
 @user_is_superuser
-@user_passes_test(lambda u: u.is_superuser)
+@login_required
 def toggle_superuser_status(request, user_id):
     user = User.objects.get(id=user_id)
+
     if user.is_superuser:
         user.is_superuser = False
         messages.success(request, f"{user.username} is no longer an admin.")
+        action = 'removed'
     else:
         user.is_superuser = True
         messages.success(request, f"{user.username} is now an admin.")
+        action = 'granted'
+
     user.save()
     logger.info(f"Superuser status for user {user.username} has been updated.")
+
+    # Prepare the email content
+    subject = f"Administrative Privileges {action.capitalize()}"
+    message = f"""
+    Dear {user.username},
+
+    We would like to inform you that your administrative privileges on {get_current_site(request).domain} have been {action}.
+    As of now, your account has been updated to reflect this change.
+
+    Please note that this decision was made based on the current requirements of the system and organizational needs. 
+    If you have any questions regarding this action or believe it was made in error, feel free to reach out to our support team.
+
+    We value your contributions and hope you continue to find success in your role within the organization.
+
+    Best regards,
+    The {get_current_site(request).domain} Team
+    """
+    
+    email_message = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+    try:
+        email_message.send()
+        logger.info(f"Email sent to {user.email} regarding admin status change.")
+    except Exception as e:
+        logger.error(f"Failed to send email to {user.email}. Error: {e}")
+
     return redirect('admin_console')

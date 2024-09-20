@@ -40,6 +40,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\tests.py" />
+    <Compile Include="app\tests\adminConsoleTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\tests\employeeTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\tests\equipmentTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\tests\systemHealthCheckTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\tests\authenticationTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\tests\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
@@ -52,6 +70,7 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
+    <Folder Include="app\tests\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />

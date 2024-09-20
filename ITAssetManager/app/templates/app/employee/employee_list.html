@@ -38,7 +38,7 @@
                     <a class="employee-link" href="{% url 'employee_detail' employee.pk %}">{{ employee.first_name }} {{ employee.last_name }}</a>
                 </td>
                 <td>{{ employee.position|title }}</td>
-                <td>{{ employee.email|title }}</td>
+                <td>{{ employee.email|lower }}</td>
                 <td>{{ employee.phone_number }}</td>
                 <td>
                     <a class="btn btn-secondary btn-sm" style="text-decoration: none;" href="{% url 'employee_update' employee.pk %}">Edit</a>
