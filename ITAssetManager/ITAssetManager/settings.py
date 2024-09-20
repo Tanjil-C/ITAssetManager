@@ -25,7 +25,7 @@ SECRET_KEY = '48cfc1fd-6f33-4ad5-b54e-14a7af052e4c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ITAssetManager.onrender.com']
+ALLOWED_HOSTS = ['https://itassetmanager.onrender.com']
 
 # Application references
 INSTALLED_APPS = [
