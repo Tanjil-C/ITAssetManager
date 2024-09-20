@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['https://itassetmanager.onrender.com']
 
 # Application references
 INSTALLED_APPS = [
-    'app',
+    'ITAssetManager.app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
