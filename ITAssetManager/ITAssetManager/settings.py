@@ -148,9 +148,7 @@ SIMPLE_JWT = {
        'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-LOGS_DIR = os.path.join(BASE_DIR, 'logs')
-os.makedirs(LOGS_DIR, exist_ok=True)  # Create the logs directory if it doesn't exist
-
+# Logging configuration to log to the console
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -161,30 +159,15 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file_error': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'logs',
-                'error.log'  # File for error logs
-            ),
-            'formatter': 'verbose',  # Includes date and time
-        },
-        'file_debug': {
+        'console': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'logs',
-                'debug.log'  # File for debug logs
-            ),
-            'formatter': 'verbose',  # Includes date and time
+            'class': 'logging.StreamHandler',  # Log to console
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file_error', 'file_debug'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
         },
