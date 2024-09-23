@@ -1,8 +1,13 @@
 import os
 from datetime import timedelta
+import environ
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env = environ.Env()
+environ.Env.read_env()
 
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = None
@@ -25,7 +30,7 @@ SECRET_KEY = '48cfc1fd-6f33-4ad5-b54e-14a7af052e4c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application references
 INSTALLED_APPS = [
@@ -74,11 +79,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ITAssetManager.wsgi.application'
 
 # Database configuration
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# Render postgresSql Configuration
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 # Password validation
@@ -153,14 +164,22 @@ LOGGING = {
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGS_DIR, 'error.log'),  # Write logs to logs/error.log
-            'formatter': 'verbose',
+            'filename': os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'logs',
+                'error.log'  # File for error logs
+            ),
+            'formatter': 'verbose',  # Includes date and time
         },
         'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGS_DIR, 'debug.log'),  # Write logs to logs/debug.log
-            'formatter': 'verbose',
+            'filename': os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'logs',
+                'debug.log'  # File for debug logs
+            ),
+            'formatter': 'verbose',  # Includes date and time
         },
     },
     'loggers': {

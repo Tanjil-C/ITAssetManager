@@ -126,6 +126,7 @@
     <Content Include="app\templates\app\equipment\assign_equipment_list.html" />
     <Content Include="app\templates\app\systemhealthcheck\low_stock_items.html" />
     <Content Include="app\templates\email\welcome_email.html" />
+    <Content Include="ITAssetManager\.env" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
