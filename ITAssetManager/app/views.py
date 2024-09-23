@@ -7,7 +7,6 @@ from .forms import AssignEquipmentForm, EquipmentForm, EmployeeForm
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.http import HttpResponse
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
@@ -325,9 +324,8 @@ def trigger_error(request):
 
 @user_is_superuser
 @login_required
-def admin_dashboard(request):
-    users = User.objects.all()
-    return render(request, 'app/admin/admin_dashboard.html', {'users': users})
+def admin_console(request):
+    return render(request, 'app/admin/admin_console.html')
 
 @user_is_superuser
 @login_required
