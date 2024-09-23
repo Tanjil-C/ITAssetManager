@@ -109,7 +109,7 @@
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\static\app\scripts\register.js" />
     <Content Include="app\static\app\scripts\search.js" />
-    <Content Include="app\templates\app\admin\admin_console.html" />
+    <Content Include="app\templates\app\admin\admin_dashboard.html" />
     <Content Include="app\templates\app\base.html" />
     <Content Include="app\templates\app\employee\employee_detail.html" />
     <Content Include="app\templates\app\employee\employee_list.html" />

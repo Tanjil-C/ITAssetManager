@@ -325,9 +325,9 @@ def trigger_error(request):
 
 @user_is_superuser
 @login_required
-def admin_console(request):
+def admin_dashboard(request):
     users = User.objects.all()
-    return render(request, 'app/admin/admin_console.html', {'users': users})
+    return render(request, 'app/admin/admin_dashboard.html', {'users': users})
 
 @user_is_superuser
 @login_required
