@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 # Middleware framework
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,16 +116,19 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
+# serve static files from the directory where collectstatic places them
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Whitenoise settings
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Ensure STATICFILES_DIRS is set up correctly
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app', 'static'),
 ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Use Django's ManifestStaticFilesStorage to serve static files in production
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # REST Framework JWT configuration
 REST_FRAMEWORK = {
