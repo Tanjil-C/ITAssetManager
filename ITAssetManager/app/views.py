@@ -152,7 +152,6 @@ def equipment_detail(request, pk):
     equipment = get_object_or_404(Equipment, pk=pk)
     return render(request, 'app/equipment/equipment_detail.html', {'equipment': equipment})
 
-@user_is_superuser
 @login_required
 def equipment_create(request):
     # Handle creation of new equipment
@@ -170,7 +169,6 @@ def equipment_create(request):
         form = EquipmentForm()
     return render(request, 'app/equipment/equipment_form.html', {'form': form})
 
-@user_is_superuser
 @login_required
 def equipment_update(request, pk):
     # Handle updating existing equipment
@@ -201,7 +199,6 @@ def equipment_delete(request, pk):
         return redirect('equipment_list')
     return render(request, 'app/equipment/equipment_confirm_delete.html', {'equipment': equipment})
 
-@user_is_superuser
 @login_required
 def assign_equipment_list(request):
     # Handle assignment of equipment to employees
@@ -252,7 +249,6 @@ def employee_detail(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     return render(request, 'app/employee/employee_detail.html', {'employee': employee})
 
-@user_is_superuser
 @login_required
 def employee_create(request):
     # Handle creation of a new employee
@@ -270,7 +266,6 @@ def employee_create(request):
         form = EmployeeForm()
     return render(request, 'app/employee/employee_form.html', {'form': form})
 
-@user_is_superuser
 @login_required
 def employee_update(request, pk):
     # Handle updating an existing employee
@@ -332,7 +327,7 @@ def trigger_error(request):
 @login_required
 def admin_console(request):
     users = User.objects.all()
-    return render(request, 'app/templates/app/Admin/admin_console.html', {'users': users})
+    return render(request, 'app/admin/admin_console.html', {'users': users})
 
 @user_is_superuser
 @login_required
