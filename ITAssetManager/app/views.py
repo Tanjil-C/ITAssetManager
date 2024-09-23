@@ -325,7 +325,7 @@ def trigger_error(request):
 @user_is_superuser
 @login_required
 def admin_dashboard(request):
-    return render(request, 'app/admin/admin_console.html')
+    return render(request, 'app/admin/admin_dashboard.html')
 
 @user_is_superuser
 @login_required
