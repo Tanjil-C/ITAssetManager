@@ -384,4 +384,4 @@ from django.contrib.auth.models import User
 @login_required
 def admin_controls(request):
     users = User.objects.all()
-    return render(request, 'app/controls_admin.html')
+    return render(request, 'app/controls_admin.html',  {'users': users})
