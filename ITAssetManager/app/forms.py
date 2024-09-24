@@ -76,7 +76,7 @@ class AssignEquipmentForm(forms.Form):
     employee = forms.ModelChoiceField(
         queryset=Employee.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False,
+        required=True,
         empty_label="No user"
     )
     equipment = forms.ModelChoiceField(
