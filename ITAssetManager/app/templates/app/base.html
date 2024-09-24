@@ -26,6 +26,7 @@
                         <li><a href="{% url 'system_health_check' %}">System Health Check</a></li>
                         <li><a href="{% url 'equipment_list' %}">Equipment Management</a></li>
                         <li><a href="{% url 'employee_list' %}">Employee Management</a></li>
+                        <li><a href="{% url 'controls_Admin' %}">Admin Controls</a></li>
                         {% if user.is_superuser %}
                         <li><a href="{% url 'admin_dashboard' %}">Admin's Console</a></li>
                         {% endif %}
