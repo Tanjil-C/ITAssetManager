@@ -76,7 +76,6 @@
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\content\equipment\" />
     <Folder Include="app\static\app\content\employee\" />
-    <Folder Include="app\static\app\content\admin\" />
     <Folder Include="app\static\app\content\systemhealthcheck\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
@@ -84,13 +83,11 @@
     <Folder Include="app\templates\app\" />
     <Folder Include="app\templates\app\equipment\" />
     <Folder Include="app\templates\app\employee\" />
-    <Folder Include="app\templates\app\admin\" />
     <Folder Include="app\templates\app\systemhealthcheck\" />
     <Folder Include="app\templates\email\" />
     <Folder Include="ITAssetManager\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\static\app\content\admin\admin_console.css" />
     <Content Include="app\static\app\content\admin_controls.css" />
     <Content Include="app\static\app\content\base.css" />
     <Content Include="app\static\app\content\employee\employee_confirm_delete.css" />
@@ -110,7 +107,6 @@
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\static\app\scripts\register.js" />
     <Content Include="app\static\app\scripts\search.js" />
-    <Content Include="app\templates\app\admin\admin_dashboard.html" />
     <Content Include="app\templates\app\base.html" />
     <Content Include="app\templates\app\controls_admin.html" />
     <Content Include="app\templates\app\employee\employee_detail.html" />

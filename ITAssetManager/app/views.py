@@ -324,18 +324,6 @@ def trigger_error(request):
 
 @user_is_superuser
 @login_required
-def admin_dashboard(request):
-    try:
-        users = User.objects.all()
-    except Exception as e:
-        users = []
-        error_message = str(e)
-        return render(request, 'app/admin/admin_dashboard.html', {'users': users, 'error_message': error_message})
-
-    return render(request, 'app/admin/admin_dashboard.html', {'users': users})
-
-@user_is_superuser
-@login_required
 def toggle_superuser_status(request, user_id):
     user = User.objects.get(id=user_id)
 
