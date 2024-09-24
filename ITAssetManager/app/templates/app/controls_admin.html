@@ -1,56 +1,13 @@
-{% extends 'app/base.html' %}
-{% load static %}
+<!DOCTYPE html>
 
-{% block title %}Admin's Dashboard{% endblock %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'app/content/admin_controls.css' %}">
-{% endblock %}
+    <h1> Admin Controls </h1>
 
-{% block content %}
-<h1>Admin's Dashboard</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Admin Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.1 }}</td>  <!-- username -->
-            <td>{{ user.2 }}</td>  <!-- email -->
-            <td>{{ user.3 }}</td>  <!-- is_superuser -->
-            <td>
-                <form action="{% url 'toggle_superuser_status' user.id %}" method="POST" onsubmit="return confirmToggleStatus('{{ user.username }}', '{{ user.is_superuser }}');">
-                    {% csrf_token %}
-                    <button type="submit">
-                        {% if user.is_superuser %}
-                        Remove Admin
-                        {% else %}
-                        Make Admin
-                        {% endif %}
-                    </button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<script>
-    function confirmToggleStatus(username, isSuperuser) {
-        isSuperuser = (isSuperuser === 'True');
-
-        if (isSuperuser) {
-            return confirm(`Are you sure you want to revoke admin privileges from ${username}?`);
-        } else {
-            return confirm(`Are you sure you want to make ${username} an admin?`);
-        }
-    }
-</script>
-
-{% endblock %}
+</body>
+</html>
