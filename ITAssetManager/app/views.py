@@ -378,9 +378,10 @@ def toggle_superuser_status(request, user_id):
 
     return redirect('admin_console')
 
-from django.db import connection
+from django.contrib.auth.models import User
 
 @user_is_superuser
 @login_required
 def admin_controls(request):
+    users = User.objects.all()
     return render(request, 'app/controls_admin.html')
