@@ -325,7 +325,8 @@ def trigger_error(request):
 @user_is_superuser
 @login_required
 def admin_dashboard(request):
-    return render(request, 'app/admin/admin_dashboard.html')
+    users = User.objects.all()
+    return render(request, 'app/admin/admin_dashboard.html', {'users': users})
 
 @user_is_superuser
 @login_required
@@ -370,3 +371,8 @@ def toggle_superuser_status(request, user_id):
         logger.error(f"Failed to send email to {user.email}. Error: {e}")
 
     return redirect('admin_console')
+
+@user_is_superuser
+@login_required
+def admin_controls(request):
+    return render(request, 'app/controls_admin.html')

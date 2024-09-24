@@ -46,6 +46,7 @@ urlpatterns = [
     path('employee/<int:pk>/delete/', views.employee_delete, name='employee_delete'),
 
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('admin-controls/', views.admin_controls, name='admin_controls'),
     path('toggle-superuser/<int:user_id>/', views.toggle_superuser_status, name='toggle_superuser_status'),
 
     path('trigger-error/', views.trigger_error, name='trigger_error'),
