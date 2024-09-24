@@ -383,8 +383,4 @@ from django.db import connection
 @user_is_superuser
 @login_required
 def admin_controls(request):
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT id, username, email, is_superuser FROM auth_user")
-        users = cursor.fetchall()
-    
-    return render(request, 'app/controls_admin.html', {'users': users})
+    return render(request, 'app/controls_admin.html')
