@@ -1,5 +1,4 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Equipment, Employee
 from .decorators import login_required, user_is_superuser
@@ -15,6 +14,7 @@ from django.utils.html import strip_tags
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 
 
@@ -325,7 +325,13 @@ def trigger_error(request):
 @user_is_superuser
 @login_required
 def admin_dashboard(request):
-    users = User.objects.all()
+    try:
+        users = User.objects.all()
+    except Exception as e:
+        users = []
+        error_message = str(e)
+        return render(request, 'app/admin/admin_dashboard.html', {'users': users, 'error_message': error_message})
+
     return render(request, 'app/admin/admin_dashboard.html', {'users': users})
 
 @user_is_superuser
@@ -372,7 +378,13 @@ def toggle_superuser_status(request, user_id):
 
     return redirect('admin_console')
 
+from django.db import connection
+
 @user_is_superuser
 @login_required
 def admin_controls(request):
-    return render(request, 'app/controls_admin.html')
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id, username, email, is_superuser FROM auth_user")
+        users = cursor.fetchall()
+    
+    return render(request, 'app/controls_admin.html', {'users': users})

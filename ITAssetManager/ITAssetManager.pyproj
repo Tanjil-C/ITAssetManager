@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\admin\admin_console.css" />
+    <Content Include="app\static\app\content\admin_controls.css" />
     <Content Include="app\static\app\content\base.css" />
     <Content Include="app\static\app\content\employee\employee_confirm_delete.css" />
     <Content Include="app\static\app\content\employee\employee_detail.css" />
