@@ -37,6 +37,7 @@ class Employee(models.Model):
         ('manager', 'Manager'),
         ('technician', 'Technician'),
         ('intern', 'Intern'),
+        ('engineer', 'Engineer'),
         ('contractor', 'Contractor'),
         ('receptionist', 'Receptionist'),
         ('hr manager', 'Hr Manager'),
@@ -52,3 +53,21 @@ class Employee(models.Model):
     
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class ErrorLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    error_message = models.TextField()
+    severity = models.CharField(max_length=10, choices=[
+        ('info', 'Info'),
+        ('warning', 'Warning'),
+        ('error', 'Error'),
+        ('critical', 'Critical'),
+    ], default='error')  # Default severity level
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        user_str = self.user.username if self.user else "Anonymous"
+        return f"Error by {user_str} at {self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}: {self.error_message[:50]}..."  # Display a snippet of the message
+
+    class Meta:
+        ordering = ['-timestamp']  # Order by timestamp, newest first

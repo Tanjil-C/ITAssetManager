@@ -48,5 +48,6 @@ urlpatterns = [
     path('admin-controls/', views.admin_controls, name='admin_controls'),
     path('toggle-superuser/<int:user_id>/', views.toggle_superuser_status, name='toggle_superuser_status'),
 
+    path('error-logs/', views.error_logs, name='error_logs'),
     path('trigger-error/', views.trigger_error, name='trigger_error'),
 ]

@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Admin's Controls{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/admin/admin_controls.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Admin's Controls</h1>
+
+    <!-- Error Logs Widget -->
+    <div class="widget">
+        <h2>Error Logs</h2>
+        <p>View and manage error logs for better debugging.</p>
+        <a href="{% url 'error_logs' %}" class="btn">Go to Error Logs</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_superuser }}</td>
+                <td>
+                    <form action="{% url 'toggle_superuser_status' user.id %}" method="POST" onsubmit="return confirmToggleStatus('{{ user.username }}', '{{ user.is_superuser }}');">
+                        {% csrf_token %}
+                        <button type="submit">
+                            {% if user.is_superuser %}
+                            Remove Admin
+                            {% else %}
+                            Make Admin
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function confirmToggleStatus(username, isSuperuser) {
+            isSuperuser = (isSuperuser === 'True');
+
+            if (isSuperuser) {
+                return confirm(`Are you sure you want to revoke admin privileges from ${username}?`);
+            } else {
+                return confirm(`Are you sure you want to make ${username} an admin?`);
+            }
+        }
+    </script>
+</div>
+{% endblock %}

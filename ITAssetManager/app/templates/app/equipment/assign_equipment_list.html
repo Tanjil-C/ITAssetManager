@@ -31,6 +31,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Position</th>
             <th scope="col">Assigned Equipment</th>
         </tr>
     </thead>
@@ -39,6 +40,7 @@
         <tr>
             <th scope="row">{{ employee.id }}</th>
             <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+            <td>{{ employee.position|title }}</td>
             <td>
                 {% if employee.equipment.all %}
                 <ul class="list-unstyled mb-0">

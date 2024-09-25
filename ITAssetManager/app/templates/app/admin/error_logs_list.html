@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Error Logs{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'app/content/admin/error_logs.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Error Logs</h1>
+
+    <!-- Error logs table -->
+    <table class="logs-table" style="background-color: black; color: white; width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="color: white; text-align: left;">ID</th>
+                <th style="color: red; text-align: left;">Error Message</th>
+                <th style="color: white; text-align: left;">Date & Time</th>
+                <th style="color: red; text-align: left;">Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if logs %}
+            {% for log in logs %}
+            <tr>
+                <td style="color: white; text-align: left;">{{ log.id }}</td>
+                <td style="color: red; text-align: left;">{{ log.error_message }}</td>
+                <td style="color: white; text-align: left;">{{ log.timestamp|date:"Y-m-d H:i:s" }}</td>
+                <td style="color: red; text-align: left;">{{ log.severity }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: white;">No error logs found.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function showPopup(message) {
+        alert(message);
+    }
+
+    fetch(window.location.href)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error && data.reload) {
+                showPopup(data.error);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);  // Wait 3 seconds before reloading
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+</script>
+
+{% endblock %}

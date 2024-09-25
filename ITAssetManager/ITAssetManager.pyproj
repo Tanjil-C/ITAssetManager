@@ -70,6 +70,8 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
+    <Folder Include="app\static\app\content\admin\" />
+    <Folder Include="app\templates\app\admin\" />
     <Folder Include="app\tests\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
@@ -88,7 +90,8 @@
     <Folder Include="ITAssetManager\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\static\app\content\admin_controls.css" />
+    <Content Include="app\static\app\content\admin\admin_controls.css" />
+    <Content Include="app\static\app\content\admin\error_logs.css" />
     <Content Include="app\static\app\content\base.css" />
     <Content Include="app\static\app\content\employee\employee_confirm_delete.css" />
     <Content Include="app\static\app\content\employee\employee_detail.css" />
@@ -107,8 +110,9 @@
     <Content Include="app\static\app\scripts\login.js" />
     <Content Include="app\static\app\scripts\register.js" />
     <Content Include="app\static\app\scripts\search.js" />
+    <Content Include="app\templates\app\admin\error_logs_list.html" />
     <Content Include="app\templates\app\base.html" />
-    <Content Include="app\templates\app\controls_admin.html" />
+    <Content Include="app\templates\app\admin\controls_admin.html" />
     <Content Include="app\templates\app\employee\employee_detail.html" />
     <Content Include="app\templates\app\employee\employee_list.html" />
     <Content Include="app\templates\app\employee\employee_form.html" />
