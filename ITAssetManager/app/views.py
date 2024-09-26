@@ -43,7 +43,7 @@ def jwt_login(request):
         ErrorLog.objects.create(
             user=request.user,  # Save the current user
             error_message=str(e),
-            severity='error'  # You can adjust this based on your needs
+            severity='error'  
         )
     return JsonResponse({'error': 'Invalid credentials'}, status=400)
 
@@ -458,7 +458,7 @@ def trigger_error(request):
         ErrorLog.objects.create(
             user=request.user,  # Save the current user
             error_message=str(e),
-            severity='error'  # You can adjust this based on your needs
+            severity='error' 
         )
 
         return HttpResponse('An error occurred and was logged.', status=500)

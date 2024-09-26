@@ -7,13 +7,10 @@ urlpatterns = [
     # Home page (requires authentication)
     path('', views.home, name='home'),
 
-    # Login page (public, users can access without being logged in)
     path('login/', views.login_view, name='login'),
 
-    # Logout page
     path('logout/', views.logout_view, name='logout'),
 
-    # Register page
     path('register/', views.register_view, name='register'), 
 
     # JWT Token endpoints (default views provided by SimpleJWT)
